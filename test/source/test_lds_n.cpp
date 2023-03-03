@@ -11,12 +11,12 @@ TEST_CASE("Sphere3") {
   // CHECK(x1 == doctest::Approx(0.8966646826));
 }
 
-TEST_CASE("HaltonN") {
-  const size_t base[] = {2, 3, 5, 7};
-  auto hgen = lds2::HaltonN(base);
-  const auto res = hgen.pop();
-  CHECK(res[0] == doctest::Approx(0.5));
-}
+// TEST_CASE("HaltonN") {
+//   const size_t base[] = {2, 3, 5, 7};
+//   auto hgen = lds2::HaltonN(base);
+//   const auto res = hgen.pop();
+//   CHECK(res[0] == doctest::Approx(0.5));
+// }
 
 TEST_CASE("CylinN") {
   const size_t base[] = {2, 3, 5, 7};

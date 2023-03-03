@@ -9,7 +9,7 @@ CPMAddPackage("gh:microsoft/GSL@3.1.0")
 
 CPMAddPackage(
   NAME Lds
-  GIT_TAG 1.0.4
+  GIT_TAG 1.0.5
   GITHUB_REPOSITORY luk036/lds-cpp
   OPTIONS "INSTALL_ONLY YES" # create an installable target
 )
