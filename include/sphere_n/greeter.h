@@ -4,7 +4,7 @@
 
 namespace sphere_n {
 
-/**  Language codes to be used with the Sphere_N class */
+/**  Language codes to be used with the SphereN class */
 enum class LanguageCode { EN, DE, ES, FR };
 
 /**

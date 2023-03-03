@@ -1,4 +1,4 @@
-#include <sphere_n/greeter.h> // for Sphere_N
+#include <sphere_n/greeter.h> // for SphereN
 #include <sphere_n/version.h> // for SPHERE_N_VERSION
 
 #include <cxxopts.hpp>   // for value, OptionAdder, Options, OptionValue
@@ -38,7 +38,7 @@ auto main(int argc, char **argv) -> int {
   }
 
   if (result["version"].as<bool>()) {
-    std::cout << "Sphere_N, version " << SPHERE_N_VERSION << std::endl;
+    std::cout << "SphereN, version " << SPHERE_N_VERSION << std::endl;
     return 0;
   }
 

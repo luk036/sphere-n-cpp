@@ -34,8 +34,8 @@ Low discrepany sequence for modern C++
 ### Adjust the template to your needs
 
 - Use this repo [as a template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
-- Replace all occurrences of "Sphere_N" in the relevant CMakeLists.txt with the name of your project
-  - Capitalization matters here: `Sphere_N` means the name of the project, while `sphere_n` is used in file names.
+- Replace all occurrences of "SphereN" in the relevant CMakeLists.txt with the name of your project
+  - Capitalization matters here: `SphereN` means the name of the project, while `sphere_n` is used in file names.
   - Remember to rename the `include/sphere_n` directory to use your project's lowercase name and update all relevant `#include`s accordingly.
 - Replace the source files with your own
 - For header-only libraries: see the comments in [CMakeLists.txt](CMakeLists.txt)
@@ -55,7 +55,7 @@ Use the following command to build and run the executable target.
 ```bash
 cmake -S. -B build
 cmake --build build
-./build/standalone/Sphere_N --help
+./build/standalone/SphereN --help
 ```
 
 ### Build and run test suite
