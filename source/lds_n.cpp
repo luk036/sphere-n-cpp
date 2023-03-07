@@ -72,15 +72,18 @@ static auto get_tp(size_t n) -> const Arr & {
     return cache[n];
   }
   const auto &tp_minus2 = get_tp(n - 2);
-  cache[n] = ((n - 1.0) * tp_minus2 + NEG_COSINE * xt::pow(SINE, n - 1.0)) / n;
+  const auto n1 = double(n) - 1.0;
+  cache[n] = (n1 * tp_minus2 + NEG_COSINE * xt::pow(SINE, n1)) / double(n);
   return cache[n];
 }
 
 /**
  * @brief Construct a new Sphere 3:: Sphere 3 object
  *
- * @param base
+ * @param[in] base
  */
+// Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]},
+// sphere2{base.subspan(1, 2)} {}
 Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]}, sphere2{&base[1]} {}
 
 /**
@@ -101,7 +104,7 @@ auto Sphere3::pop() -> array<double, 4> {
 /**
  * @brief Construct a new Sphere N:: Sphere N object
  *
- * @param base
+ * @param[in] base
  */
 SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
   const auto m = base.size();
@@ -109,6 +112,7 @@ SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
   Arr tp_minus2;
   if (m == 4) {
     // tp_minus2 = NEG_COSINE;
+    // this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
     this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
   } else {
     auto s_minus1 = std::make_unique<SphereN>(base.last(m - 1));
