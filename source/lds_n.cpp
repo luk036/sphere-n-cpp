@@ -84,7 +84,8 @@ static auto get_tp(size_t n) -> const Arr & {
  */
 // Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]},
 // sphere2{base.subspan(1, 2)} {}
-Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]}, sphere2{&base[1]} {}
+Sphere3::Sphere3(span<const size_t> base)
+    : vdc{base[0]}, sphere2{base[1], base[2]} {}
 
 /**
  * @brief

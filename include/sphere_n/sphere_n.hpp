@@ -11,7 +11,7 @@
 #include <vector>      // for vector
 // #include <xtensor/xarray.hpp>  // for xtensor, xarray
 
-#include <lds/lds.hpp> // for Vdcorput, Sphere
+#include <lds/lds.hpp> // for VdCorput, Sphere
 
 namespace lds2 {
 // using Arr = xt::xarray<double, xt::layout_type::row_major>;
@@ -25,7 +25,7 @@ using std::vector;
 //  */
 // class HaltonN {
 // private:
-//   vector<Vdcorput> vdcs;
+//   vector<VdCorput> vdcs;
 //
 // public:
 //   /**
@@ -35,7 +35,7 @@ using std::vector;
 //    */
 //   explicit HaltonN(span<const size_t> base) {
 //     for (const auto &b : base) {
-//       this->vdcs.emplace_back(Vdcorput(b));
+//       this->vdcs.emplace_back(VdCorput(b));
 //     }
 //   }
 //
@@ -71,7 +71,7 @@ using CylinVariant =
 
 /** Generate using cylindrical coordinate method */
 class CylinN {
-  Vdcorput vdc;
+  VdCorput vdc;
   CylinVariant c_gen;
 
 public:
@@ -100,7 +100,7 @@ public:
 
 /** Generate Sphere-3 Halton sequence */
 class Sphere3 {
-  Vdcorput vdc;
+  VdCorput vdc;
   Sphere sphere2;
   // Arr tp;
 
@@ -145,7 +145,7 @@ using SphereVariant =
 /** Generate Sphere-3 Halton sequence */
 class SphereN {
   size_t n;
-  Vdcorput vdc;
+  VdCorput vdc;
   SphereVariant s_gen;
   // Arr tp;
 

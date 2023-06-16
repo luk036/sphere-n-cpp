@@ -5,12 +5,12 @@
 #include <numeric>
 #include <vector>
 
-class Vdcorput {
+class VdCorput {
   int base;
   int seed;
 
 public:
-  Vdcorput(int base) : base(base), seed(0) {}
+  VdCorput(int base) : base(base), seed(0) {}
   double pop() {
     double r = 0.0;
     double base_inv = 1.0 / base;
@@ -29,7 +29,7 @@ public:
 };
 
 class Circle {
-  Vdcorput vdc;
+  VdCorput vdc;
   std::vector<double> c_gen;
 
 public:
@@ -56,7 +56,7 @@ class CylinN : public Circle {
 public:
   CylinN(int n, std::vector<int> base) : Circle(base[1]), n(n) {
     assert(n >= 1);
-    vdc = Vdcorput(base[0]);
+    vdc = VdCorput(base[0]);
     if (n > 1) {
       c_gen = std::vector<double>(n - 1);
       CylinN(n - 1, std::vector<int>(base.begin() + 1, base.end())).swap(c_gen);
@@ -113,7 +113,7 @@ std::vector<double> get_tp(int n) {
 }
 
 class Sphere {
-  Vdcorput vdc;
+  VdCorput vdc;
   std::vector<double> s_gen;
 
 public:
@@ -144,7 +144,7 @@ public:
   SphereN(int n, std::vector<int> base)
       : Sphere(std::vector<int>(base.begin() + 1, base.begin() + 3)), n(n) {
     assert(n >= 2);
-    vdc = Vdcorput(base[0]);
+    vdc = VdCorput(base[0]);
     if (n > 2) {
       s_gen = std::vector<double>(n - 2);
       SphereN(n - 1, std::vector<int>(base.begin() + 1, base.end()))
