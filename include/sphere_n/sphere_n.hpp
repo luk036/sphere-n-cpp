@@ -19,50 +19,122 @@ using gsl::span;
 using std::array;
 using std::vector;
 
-// /**
-//  * @brief Halton(n) sequence generator
-//  *
-//  */
-// class HaltonN {
-// private:
-//   vector<VdCorput> vdcs;
-//
-// public:
-//   /**
-//    * @brief Construct a new Halton N object
-//    *
-//    * @param base
-//    */
-//   explicit HaltonN(span<const size_t> base) {
-//     for (const auto &b : base) {
-//       this->vdcs.emplace_back(VdCorput(b));
-//     }
-//   }
-//
-//   /**
-//    * @brief
-//    *
-//    * @return vector<double>
-//    */
-//   auto pop() -> vector<double> {
-//     auto res = vector<double>{};
-//     for (auto &vdc : this->vdcs) {
-//       res.emplace_back(vdc.pop());
-//     }
-//     return res;
-//   }
-//
-//   /**
-//    * @brief
-//    *
-//    * @param seed
-//    */
-//   auto reseed(size_t seed) -> void {
-//     for (auto &vdc : this->vdcs) {
-//       vdc.reseed(seed);
-//     }
-//   }
-// };
+/**
+ * @brief S(3) sequence generator
+ *
+ * The `Sphere3` class is a sequence generator that generates points on a
+ * 3-sphere. It uses instances of the `VdCorput`
+ * class to generate the sequence values and maps them to points on the
+ * 3-sphere. The `pop()` method returns the next point on the 3-sphere as a
+ * `std::array<double, 4>`, where the first three elements represent the x, y,
+ * and z coordinates of the point, etc. The `reseed()` method is used to
+ * reset the state of the sequence generator to a specific seed value.
+ */
+class Sphere3 {
+  VdCorput vdc;
+  Sphere sphere2;
+  // Arr tp;
+
+public:
+  /**
+   * @brief Construct a new Sphere3 object
+   *
+   * The `Sphere3(span<const size_t> &base)` is a constructor for
+   * the `Sphere3` class. It takes one parameter `base`, which is
+   * used as the bases for generating the Sphere3 sequence. The `explicit`
+   * keyword indicates that this constructor can only be used for explicit
+   * construction and not for implicit conversions.
+   *
+   * @param[in] base
+   */
+  explicit Sphere3(span<const size_t> base);
+
+  /**
+   * @brief reseed
+   *
+   * The `reseed(size_t seed)` function is used to reset the state of the
+   * sequence generator to a specific seed value. This allows the sequence
+   * generator to start generating the sequence from the beginning, or from a
+   * specific point in the sequence, depending on the value of the seed.
+   *
+   * @param seed
+   */
+  auto reseed(size_t seed) -> void {
+    this->vdc.reseed(seed);
+    this->sphere2.reseed(seed);
+  }
+
+  /**
+   * @brief pop
+   *
+   * The `pop()` function is used to generate the next value in the sequence. In
+   * the `VdCorput` class, `pop()` increments the count and calculates the Van
+   * der Corput sequence value for that count and base. In the `Halton` class,
+   * `pop()` returns the next point in the Halton sequence as a
+   * `std::array<double, 2>`. Similarly, in the `Circle` class, `pop()` returns
+   * the next point on the unit circle as a `std::array<double, 2>`. In the
+   * `Sphere` class, `pop()` returns the next point on the unit sphere as a
+   * `std::array<double, 3>`. And in the `Sphere3` class, `pop()` returns
+   * the next point on the 3-sphere as a `std::array<double, 4>`.
+   *
+   * @return std::array<double, 4>
+   */
+  auto pop() -> array<double, 4>;
+};
+
+class SphereN;
+
+using SphereVariant =
+    std::variant<std::unique_ptr<Sphere3>, std::unique_ptr<SphereN>>;
+
+/**
+ * @brief S(n) sequence generator
+ *
+ * The `SphereN` class is a sequence generator that generates points on a
+ * n-sphere. It uses instances of the `VdCorput`
+ * class to generate the sequence values and maps them to points on the
+ * n-sphere. The `pop()` method returns the next point on the n-sphere as a
+ * `std::vector<double>`, where the first three elements represent the x, y,
+ * and z coordinates of the point, etc. The `reseed()` method is used to
+ * reset the state of the sequence generator to a specific seed value.
+ */
+class SphereN {
+  size_t n;
+  VdCorput vdc;
+  SphereVariant s_gen;
+  // Arr tp;
+
+public:
+  /**
+   * @brief Construct a new Sphere N object
+   *
+   * The `SphereN(span<const size_t> &base)` is a constructor for
+   * the `SphereN` class. It takes one parameter `base`, which is
+   * used as the bases for generating the SphereN sequence. The `explicit`
+   * keyword indicates that this constructor can only be used for explicit
+   * construction and not for implicit conversions.
+   *
+   * @param[in] base
+   */
+  explicit SphereN(span<const size_t> base);
+
+  /**
+   * @brief pop
+   *
+   * The `pop()` function is used to generate the next value in the sequence. In
+   * the `VdCorput` class, `pop()` increments the count and calculates the Van
+   * der Corput sequence value for that count and base. In the `Halton` class,
+   * `pop()` returns the next point in the Halton sequence as a
+   * `std::array<double, 2>`. Similarly, in the `Circle` class, `pop()` returns
+   * the next point on the unit circle as a `std::array<double, 2>`. In the
+   * `Sphere` class, `pop()` returns the next point on the unit sphere as a
+   * `std::array<double, 3>`. And in the `SphereN` class, `pop()` returns
+   * the next point on the n-sphere as a `std::vector<double>`.
+   *
+   * @return vector<double>
+   */
+  auto pop() -> vector<double>;
+};
 
 class CylinN;
 
@@ -75,11 +147,6 @@ class CylinN {
   CylinVariant c_gen;
 
 public:
-  /**
-   * @brief Construct a new cylin n::cylin n object
-   *
-   * @param base
-   */
   explicit CylinN(span<const size_t> base) : vdc{base[0]} {
     const auto n = base.size();
     assert(n >= 2);
@@ -90,78 +157,6 @@ public:
     }
   }
 
-  /**
-   * @brief
-   *
-   * @return vector<double>
-   */
-  auto pop() -> vector<double>;
-};
-
-/** Generate Sphere-3 Halton sequence */
-class Sphere3 {
-  VdCorput vdc;
-  Sphere sphere2;
-  // Arr tp;
-
-public:
-  /**
-   * @brief Construct a new Sphere3 object
-   *
-   * @param base
-   */
-  explicit Sphere3(span<const size_t> base);
-
-  /**
-   * @brief Get the tp object
-   *
-   * @return const Arr&
-   */
-  // auto get_tp() const -> const Arr& { return this->tp; }
-
-  /**
-   * @brief
-   *
-   * @param seed
-   */
-  auto reseed(size_t seed) -> void {
-    this->vdc.reseed(seed);
-    this->sphere2.reseed(seed);
-  }
-
-  /**
-   * @brief
-   *
-   * @return array<double, 4>
-   */
-  auto pop() -> array<double, 4>;
-};
-
-class SphereN;
-
-using SphereVariant =
-    std::variant<std::unique_ptr<Sphere3>, std::unique_ptr<SphereN>>;
-
-/** Generate Sphere-3 Halton sequence */
-class SphereN {
-  size_t n;
-  VdCorput vdc;
-  SphereVariant s_gen;
-  // Arr tp;
-
-public:
-  /**
-   * @brief Construct a new Sphere N object
-   *
-   * @param base
-   */
-  explicit SphereN(span<const size_t> base);
-
-  /**
-   * @brief
-   *
-   * @return vector<double>
-   */
   auto pop() -> vector<double>;
 };
 

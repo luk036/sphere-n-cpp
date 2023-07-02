@@ -38,34 +38,6 @@ static const Arr X = xt::linspace(0.0, PI, 300);
 static const Arr NEG_COSINE = -xt::cos(X);
 static const Arr SINE = xt::sin(X);
 
-/**
- * @brief
- *
- * @return vector<double>
- */
-auto CylinN::pop() -> vector<double> {
-  const auto cosphi = 2.0 * this->vdc.pop() - 1.0; // map to [-1, 1];
-  const auto sinphi = sqrt(1.0 - cosphi * cosphi);
-  auto res = std::visit(
-      [](auto &t) {
-        using T = std::decay_t<decltype(*t)>;
-        if constexpr (std::is_same_v<T, Circle>) {
-          auto arr = t->pop();
-          return vector<double>(arr.begin(), arr.end());
-        } else if constexpr (std::is_same_v<T, CylinN>) {
-          return t->pop();
-        } else {
-          return vector<double>{};
-        }
-      },
-      this->c_gen);
-  for (auto &xi : res) {
-    xi *= sinphi;
-  }
-  res.push_back(cosphi);
-  return res;
-}
-
 static auto get_tp(size_t n) -> const Arr & {
   static auto cache = unordered_map<size_t, Arr>{{0, X}, {1, NEG_COSINE}};
   if (cache.find(n) != cache.end()) {
@@ -77,13 +49,6 @@ static auto get_tp(size_t n) -> const Arr & {
   return cache[n];
 }
 
-/**
- * @brief Construct a new Sphere 3:: Sphere 3 object
- *
- * @param[in] base
- */
-// Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]},
-// sphere2{base.subspan(1, 2)} {}
 Sphere3::Sphere3(span<const size_t> base)
     : vdc{base[0]}, sphere2{base[1], base[2]} {}
 
@@ -102,11 +67,6 @@ auto Sphere3::pop() -> array<double, 4> {
   return {sinxi * s0, sinxi * s1, sinxi * s2, cosxi};
 }
 
-/**
- * @brief Construct a new Sphere N:: Sphere N object
- *
- * @param[in] base
- */
 SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
   const auto m = base.size();
   assert(m >= 4);
@@ -125,11 +85,6 @@ SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
   // n;
 }
 
-/**
- * @brief
- *
- * @return vector<double>
- */
 auto SphereN::pop() -> vector<double> {
   const auto vd = this->vdc.pop();
   const auto &tp = get_tp(this->n);
@@ -156,4 +111,28 @@ auto SphereN::pop() -> vector<double> {
   res.emplace_back(cos(xi[0]));
   return res;
 }
+
+auto CylinN::pop() -> vector<double> {
+  const auto cosphi = 2.0 * this->vdc.pop() - 1.0; // map to [-1, 1];
+  const auto sinphi = sqrt(1.0 - cosphi * cosphi);
+  auto res = std::visit(
+      [](auto &t) {
+        using T = std::decay_t<decltype(*t)>;
+        if constexpr (std::is_same_v<T, Circle>) {
+          auto arr = t->pop();
+          return vector<double>(arr.begin(), arr.end());
+        } else if constexpr (std::is_same_v<T, CylinN>) {
+          return t->pop();
+        } else {
+          return vector<double>{};
+        }
+      },
+      this->c_gen);
+  for (auto &xi : res) {
+    xi *= sinphi;
+  }
+  res.push_back(cosphi);
+  return res;
+}
+
 } // namespace lds2
