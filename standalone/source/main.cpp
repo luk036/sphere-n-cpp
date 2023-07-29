@@ -9,47 +9,47 @@
 #include <utility>       // for pair
 
 auto main(int argc, char **argv) -> int {
-  const std::unordered_map<std::string, sphere_n::LanguageCode> languages{
-      {"en", sphere_n::LanguageCode::EN},
-      {"de", sphere_n::LanguageCode::DE},
-      {"es", sphere_n::LanguageCode::ES},
-      {"fr", sphere_n::LanguageCode::FR},
-  };
+    const std::unordered_map<std::string, sphere_n::LanguageCode> languages{
+        {"en", sphere_n::LanguageCode::EN},
+        {"de", sphere_n::LanguageCode::DE},
+        {"es", sphere_n::LanguageCode::ES},
+        {"fr", sphere_n::LanguageCode::FR},
+    };
 
-  cxxopts::Options options(*argv, "A program to welcome the world!");
+    cxxopts::Options options(*argv, "A program to welcome the world!");
 
-  std::string language;
-  std::string name;
+    std::string language;
+    std::string name;
 
-  // clang-format off
+    // clang-format off
   options.add_options()
     ("h,help", "Show help")
     ("v,version", "Print the current version number")
     ("n,name", "Name to greet", cxxopts::value(name)->default_value("World"))
     ("l,lang", "Language code to use", cxxopts::value(language)->default_value("en"))
   ;
-  // clang-format on
+    // clang-format on
 
-  auto result = options.parse(argc, argv);
+    auto result = options.parse(argc, argv);
 
-  if (result["help"].as<bool>()) {
-    std::cout << options.help() << std::endl;
+    if (result["help"].as<bool>()) {
+        std::cout << options.help() << std::endl;
+        return 0;
+    }
+
+    if (result["version"].as<bool>()) {
+        std::cout << "SphereN, version " << SPHERE_N_VERSION << std::endl;
+        return 0;
+    }
+
+    auto langIt = languages.find(language);
+    if (langIt == languages.end()) {
+        std::cerr << "unknown language code: " << language << std::endl;
+        return 1;
+    }
+
+    // sphere_n::Sphere_N sphere_n(name);
+    // std::cout << sphere_n.greet(langIt->second) << std::endl;
+
     return 0;
-  }
-
-  if (result["version"].as<bool>()) {
-    std::cout << "SphereN, version " << SPHERE_N_VERSION << std::endl;
-    return 0;
-  }
-
-  auto langIt = languages.find(language);
-  if (langIt == languages.end()) {
-    std::cerr << "unknown language code: " << language << std::endl;
-    return 1;
-  }
-
-  // sphere_n::Sphere_N sphere_n(name);
-  // std::cout << sphere_n.greet(langIt->second) << std::endl;
-
-  return 0;
 }

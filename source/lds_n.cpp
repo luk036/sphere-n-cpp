@@ -39,14 +39,14 @@ static const Arr NEG_COSINE = -xt::cos(X);
 static const Arr SINE = xt::sin(X);
 
 static auto get_tp(size_t n) -> const Arr & {
-  static auto cache = unordered_map<size_t, Arr>{{0, X}, {1, NEG_COSINE}};
-  if (cache.find(n) != cache.end()) {
+    static auto cache = unordered_map<size_t, Arr>{{0, X}, {1, NEG_COSINE}};
+    if (cache.find(n) != cache.end()) {
+        return cache[n];
+    }
+    const auto &tp_minus2 = get_tp(n - 2);
+    const auto n1 = double(n) - 1.0;
+    cache[n] = (n1 * tp_minus2 + NEG_COSINE * xt::pow(SINE, n1)) / double(n);
     return cache[n];
-  }
-  const auto &tp_minus2 = get_tp(n - 2);
-  const auto n1 = double(n) - 1.0;
-  cache[n] = (n1 * tp_minus2 + NEG_COSINE * xt::pow(SINE, n1)) / double(n);
-  return cache[n];
 }
 
 Sphere3::Sphere3(span<const size_t> base)
@@ -58,81 +58,81 @@ Sphere3::Sphere3(span<const size_t> base)
  * @return array<double, 4>
  */
 auto Sphere3::pop() -> array<double, 4> {
-  const auto ti = HALF_PI * this->vdc.pop(); // map to [0, pi/2];
-  const auto &tp = get_tp(3);
-  const auto xi = xt::interp(xt::xtensor<double, 1>{ti}, tp, X);
-  const auto cosxi = cos(xi[0]);
-  const auto sinxi = sin(xi[0]);
-  const auto [s0, s1, s2] = this->sphere2.pop();
-  return {sinxi * s0, sinxi * s1, sinxi * s2, cosxi};
+    const auto ti = HALF_PI * this->vdc.pop(); // map to [0, pi/2];
+    const auto &tp = get_tp(3);
+    const auto xi = xt::interp(xt::xtensor<double, 1>{ti}, tp, X);
+    const auto cosxi = cos(xi[0]);
+    const auto sinxi = sin(xi[0]);
+    const auto [s0, s1, s2] = this->sphere2.pop();
+    return {sinxi * s0, sinxi * s1, sinxi * s2, cosxi};
 }
 
 SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
-  const auto m = base.size();
-  assert(m >= 4);
-  Arr tp_minus2;
-  if (m == 4) {
-    // tp_minus2 = NEG_COSINE;
-    // this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
-    this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
-  } else {
-    auto s_minus1 = std::make_unique<SphereN>(base.last(m - 1));
-    // tp_minus2 = s_minus1->get_tp_minus1();
-    this->s_gen = std::move(s_minus1);
-  }
-  this->n = m - 1;
-  // this->tp = ((n - 1.0) * tp_minus2 + NEG_COSINE * xt::pow(SINE, n - 1.0)) /
-  // n;
+    const auto m = base.size();
+    assert(m >= 4);
+    Arr tp_minus2;
+    if (m == 4) {
+        // tp_minus2 = NEG_COSINE;
+        // this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
+        this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
+    } else {
+        auto s_minus1 = std::make_unique<SphereN>(base.last(m - 1));
+        // tp_minus2 = s_minus1->get_tp_minus1();
+        this->s_gen = std::move(s_minus1);
+    }
+    this->n = m - 1;
+    // this->tp = ((n - 1.0) * tp_minus2 + NEG_COSINE * xt::pow(SINE, n - 1.0))
+    // / n;
 }
 
 auto SphereN::pop() -> vector<double> {
-  const auto vd = this->vdc.pop();
-  const auto &tp = get_tp(this->n);
-  const auto ti =
-      tp[0] + (tp[tp.size() - 1] - tp[0]) * vd; // map to [t0, tm-1];
-  const auto xi = xt::interp(xt::xtensor<double, 1>{ti}, tp, X);
-  const auto sinphi = sin(xi[0]);
-  auto res = std::visit(
-      [](auto &t) {
-        using T = std::decay_t<decltype(*t)>;
-        if constexpr (std::is_same_v<T, Sphere3>) {
-          auto arr = t->pop();
-          return vector<double>(arr.begin(), arr.end());
-        } else if constexpr (std::is_same_v<T, SphereN>) {
-          return t->pop();
-        } else {
-          return vector<double>{};
-        }
-      },
-      this->s_gen);
-  for (auto &elem : res) {
-    elem *= sinphi;
-  }
-  res.emplace_back(cos(xi[0]));
-  return res;
+    const auto vd = this->vdc.pop();
+    const auto &tp = get_tp(this->n);
+    const auto ti =
+        tp[0] + (tp[tp.size() - 1] - tp[0]) * vd; // map to [t0, tm-1];
+    const auto xi = xt::interp(xt::xtensor<double, 1>{ti}, tp, X);
+    const auto sinphi = sin(xi[0]);
+    auto res = std::visit(
+        [](auto &t) {
+            using T = std::decay_t<decltype(*t)>;
+            if constexpr (std::is_same_v<T, Sphere3>) {
+                auto arr = t->pop();
+                return vector<double>(arr.begin(), arr.end());
+            } else if constexpr (std::is_same_v<T, SphereN>) {
+                return t->pop();
+            } else {
+                return vector<double>{};
+            }
+        },
+        this->s_gen);
+    for (auto &elem : res) {
+        elem *= sinphi;
+    }
+    res.emplace_back(cos(xi[0]));
+    return res;
 }
 
 auto CylinN::pop() -> vector<double> {
-  const auto cosphi = 2.0 * this->vdc.pop() - 1.0; // map to [-1, 1];
-  const auto sinphi = sqrt(1.0 - cosphi * cosphi);
-  auto res = std::visit(
-      [](auto &t) {
-        using T = std::decay_t<decltype(*t)>;
-        if constexpr (std::is_same_v<T, Circle>) {
-          auto arr = t->pop();
-          return vector<double>(arr.begin(), arr.end());
-        } else if constexpr (std::is_same_v<T, CylinN>) {
-          return t->pop();
-        } else {
-          return vector<double>{};
-        }
-      },
-      this->c_gen);
-  for (auto &xi : res) {
-    xi *= sinphi;
-  }
-  res.push_back(cosphi);
-  return res;
+    const auto cosphi = 2.0 * this->vdc.pop() - 1.0; // map to [-1, 1];
+    const auto sinphi = sqrt(1.0 - cosphi * cosphi);
+    auto res = std::visit(
+        [](auto &t) {
+            using T = std::decay_t<decltype(*t)>;
+            if constexpr (std::is_same_v<T, Circle>) {
+                auto arr = t->pop();
+                return vector<double>(arr.begin(), arr.end());
+            } else if constexpr (std::is_same_v<T, CylinN>) {
+                return t->pop();
+            } else {
+                return vector<double>{};
+            }
+        },
+        this->c_gen);
+    for (auto &xi : res) {
+        xi *= sinphi;
+    }
+    res.push_back(cosphi);
+    return res;
 }
 
 } // namespace lds2
