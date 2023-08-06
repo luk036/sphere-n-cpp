@@ -39,8 +39,7 @@ class Circle {
         double sinphi = std::sqrt(1.0 - cosphi * cosphi);
         std::vector<double> c = c_gen.pop();
         std::vector<double> result(c.size() + 1);
-        std::transform(c.begin(), c.end(), result.begin(),
-                       [&](double xi) { return xi * sinphi; });
+        std::transform(c.begin(), c.end(), result.begin(), [&](double xi) { return xi * sinphi; });
         result.back() = cosphi;
         return result;
     }
@@ -59,8 +58,7 @@ class CylinN : public Circle {
         vdc = VdCorput(base[0]);
         if (n > 1) {
             c_gen = std::vector<double>(n - 1);
-            CylinN(n - 1, std::vector<int>(base.begin() + 1, base.end()))
-                .swap(c_gen);
+            CylinN(n - 1, std::vector<int>(base.begin() + 1, base.end())).swap(c_gen);
         }
     }
     std::vector<double> pop() {
@@ -105,11 +103,10 @@ std::vector<double> get_tp(int n) {
     }
     std::vector<double> tp_minus2 = get_tp(n - 2);
     std::vector<double> result(tp_minus2.size());
-    std::transform(
-        tp_minus2.begin(), tp_minus2.end(), sine.begin() + n - 1,
-        result.begin(), [&](double tp, double sin_n_minus_1) {
-            return ((n - 1) * tp + neg_cosine[n - 1] * sin_n_minus_1) / n;
-        });
+    std::transform(tp_minus2.begin(), tp_minus2.end(), sine.begin() + n - 1, result.begin(),
+                   [&](double tp, double sin_n_minus_1) {
+                       return ((n - 1) * tp + neg_cosine[n - 1] * sin_n_minus_1) / n;
+                   });
     return result;
 }
 
@@ -126,8 +123,7 @@ class Sphere {
         double sinxi = std::sin(xi);
         std::vector<double> s = s_gen.pop();
         std::vector<double> result(s.size() + 1);
-        std::transform(s.begin(), s.end(), result.begin(),
-                       [&](double s_i) { return sinxi * s_i; });
+        std::transform(s.begin(), s.end(), result.begin(), [&](double s_i) { return sinxi * s_i; });
         result.back() = cosxi;
         return result;
     }
@@ -148,8 +144,7 @@ class SphereN : public Sphere {
         vdc = VdCorput(base[0]);
         if (n > 2) {
             s_gen = std::vector<double>(n - 2);
-            SphereN(n - 1, std::vector<int>(base.begin() + 1, base.end()))
-                .swap(s_gen);
+            SphereN(n - 1, std::vector<int>(base.begin() + 1, base.end())).swap(s_gen);
         }
         std::vector<double> tp = get_tp(n);
         range = tp.back() - tp.front();
@@ -186,8 +181,7 @@ double discrep_2(const std::vector<std::array<int, 3>> &K,
         }
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
-                double dot = std::inner_product(p[i].begin(), p[i].end(),
-                                                p[j].begin(), 0.0);
+                double dot = std::inner_product(p[i].begin(), p[i].end(), p[j].begin(), 0.0);
                 double q = 1.0 - dot * dot;
                 maxq = std::max(maxq, q);
                 minq = std::min(minq, q);
@@ -201,8 +195,7 @@ double discrep_2(const std::vector<std::array<int, 3>> &K,
 double run_lds(SphereN &spgen) {
     int npoints = 600;
     std::vector<std::vector<double>> Triples(npoints);
-    std::generate(Triples.begin(), Triples.end(),
-                  [&]() { return spgen.pop(); });
+    std::generate(Triples.begin(), Triples.end(), [&]() { return spgen.pop(); });
     std::vector<std::array<int, 3>> hull = ConvexHull(Triples).simplices;
     return discrep_2(hull, Triples);
 }
@@ -210,8 +203,7 @@ double run_lds(SphereN &spgen) {
 double run_lds(CylinN &cygen) {
     int npoints = 600;
     std::vector<std::vector<double>> Triples(npoints);
-    std::generate(Triples.begin(), Triples.end(),
-                  [&]() { return cygen.pop(); });
+    std::generate(Triples.begin(), Triples.end(), [&]() { return cygen.pop(); });
     std::vector<std::array<int, 3>> hull = ConvexHull(Triples).simplices;
     return discrep_2(hull, Triples);
 }

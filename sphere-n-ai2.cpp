@@ -22,8 +22,7 @@ class Sphere {
 std::vector<double> get_tp(int n) {
     std::vector<double> x(300);
     std::iota(x.begin(), x.end(), 0.0);
-    std::transform(x.begin(), x.end(), x.begin(),
-                   [](double xi) { return xi * PI / 299.0; });
+    std::transform(x.begin(), x.end(), x.begin(), [](double xi) { return xi * PI / 299.0; });
     if (n == 2) {
         return {0.0, PI};
     }
@@ -32,8 +31,8 @@ std::vector<double> get_tp(int n) {
     std::transform(x.begin(), x.end(), sine_n_minus_1.begin(),
                    [&](double xi) { return std::pow(std::sin(xi), n - 1); });
     std::vector<double> numerator(x.size());
-    std::transform(tp_minus2.begin(), tp_minus2.end(), sine_n_minus_1.begin(),
-                   numerator.begin(), [&](double tp, double sine_n_minus_1) {
+    std::transform(tp_minus2.begin(), tp_minus2.end(), sine_n_minus_1.begin(), numerator.begin(),
+                   [&](double tp, double sine_n_minus_1) {
                        return (n - 1) * tp + -std::cos(xi) * sine_n_minus_1;
                    });
     return std::vector<double>(numerator.begin(), numerator.end());

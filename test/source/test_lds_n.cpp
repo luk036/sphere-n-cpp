@@ -1,8 +1,8 @@
-#include <doctest/doctest.h> // for Approx, ResultBuilder, TestCase
+#include <doctest/doctest.h>  // for Approx, ResultBuilder, TestCase
 
-#include <gsl/span>              // for span
-#include <sphere_n/sphere_n.hpp> // for cylin_n, halton_n, sphere3, sphere_n
-#include <vector>                // for vector
+#include <gsl/span>               // for span
+#include <sphere_n/sphere_n.hpp>  // for cylin_n, halton_n, sphere3, sphere_n
+#include <vector>                 // for vector
 
 TEST_CASE("Sphere3") {
     const size_t base[] = {2, 3, 5};
