@@ -19,7 +19,7 @@ end
 target("SphereN")
     set_kind("static")
     add_includedirs("include", {public = true})
-    -- require lds-cpp installed also
+    add_includedirs("../lds-cpp/include", {public = true})
     add_files("source/*.cpp")
     add_packages("ms-gsl")
     add_packages("xtensor")
@@ -28,7 +28,7 @@ target("test_sphere_n")
     set_kind("binary")
     add_deps("SphereN")
     add_includedirs("include", {public = true})
-    -- require lds-cpp installed also
+    add_includedirs("../lds-cpp/include", {public = true})
     add_files("test/source/*.cpp")
     add_packages("ms-gsl", "doctest", "xtensor")
 
