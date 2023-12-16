@@ -11,11 +11,14 @@
 #include <vector>       // for vector
 // #include <xtensor/xarray.hpp>  // for xtensor, xarray
 
-#include <lds/lds.hpp>  // for VdCorput, Sphere
+#include <ldsgen/lds.hpp>  // for VdCorput, Sphere
 
 namespace lds2 {
     // using Arr = xt::xarray<double, xt::layout_type::row_major>;
     using gsl::span;
+    using ldsgen::Circle;
+    using ldsgen::Sphere;
+    using ldsgen::VdCorput;
     using std::array;
     using std::vector;
 

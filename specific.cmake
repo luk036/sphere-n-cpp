@@ -8,9 +8,9 @@ CPMAddPackage(
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
 
 CPMAddPackage(
-  NAME Lds
-  GIT_TAG 1.0.6
-  GITHUB_REPOSITORY luk036/lds-cpp
+  NAME LdsGen
+  GIT_TAG 1.0.1
+  GITHUB_REPOSITORY luk036/lds-gen-cpp
   OPTIONS "INSTALL_ONLY YES" # create an installable target
 )
 
@@ -26,5 +26,5 @@ if(xtensor_ADDED)
   include_directories(${xtensor_SOURCE_DIR}/include)
 endif(xtensor_ADDED)
 
-set(SPECIFIC_LIBS fmt::fmt GSL Lds::Lds)
+set(SPECIFIC_LIBS fmt::fmt GSL LdsGen::LdsGen)
 # remember to turn off the warnings

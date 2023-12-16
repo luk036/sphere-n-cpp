@@ -16,7 +16,7 @@ Low discrepany sequence for modern C++
 - This library requires C++17 or above.
 - This library depends on Xtensor.
 
-## Features
+## ✨ Features
 
 - Support N-Sphere
 - [Modern CMake practices](https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/)
