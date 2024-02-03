@@ -60,7 +60,7 @@ namespace lds2 {
          * generator to start generating the sequence from the beginning, or from a
          * specific point in the sequence, depending on the value of the seed.
          *
-         * @param seed
+         * @param[in] seed
          */
         auto reseed(size_t seed) -> void {
             this->vdc.reseed(seed);
