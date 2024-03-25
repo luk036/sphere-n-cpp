@@ -1,11 +1,11 @@
 CPMAddPackage(
   NAME fmt
-  GIT_TAG 7.1.3
+  GIT_TAG 9.1.0
   GITHUB_REPOSITORY fmtlib/fmt
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-CPMAddPackage("gh:microsoft/GSL@3.1.0")
+CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 CPMAddPackage(
   NAME LdsGen
@@ -26,5 +26,5 @@ if(xtensor_ADDED)
   include_directories(${xtensor_SOURCE_DIR}/include)
 endif(xtensor_ADDED)
 
-set(SPECIFIC_LIBS fmt::fmt GSL LdsGen::LdsGen)
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL)
 # remember to turn off the warnings
