@@ -4,7 +4,8 @@ add_rules("mode.debug", "mode.release", "mode.coverage")
 -- add_requires("fmt", {alias = "fmt"})
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("doctest", {alias = "doctest"})
-add_requires("xtensor", {alias = "xtensor"})
+add_requires("xsimd 8.0.2", {alias = "xsimd"})
+add_requires("xtensor 0.24.0", {alias = "xtensor"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
