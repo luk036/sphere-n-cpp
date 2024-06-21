@@ -136,6 +136,8 @@ namespace lds2 {
          * @return vector<double>
          */
         auto pop() -> vector<double>;
+
+        auto reseed(size_t seed) -> void;
     };
 
     class CylinN;
@@ -144,6 +146,7 @@ namespace lds2 {
 
     /** Generate using cylindrical coordinate method */
     class CylinN {
+      private:
         VdCorput vdc;
         CylinVariant c_gen;
 
@@ -159,6 +162,8 @@ namespace lds2 {
         }
 
         auto pop() -> vector<double>;
+
+        auto reseed(size_t seed) -> void;
     };
 
     // First 1000 prime numbers;
