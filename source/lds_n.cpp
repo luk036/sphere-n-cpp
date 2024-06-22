@@ -1,16 +1,21 @@
 #include <stddef.h>  // for size_t
 
-#include <cassert>                  // for assert
-#include <cmath>                    // for cos, sin, sqrt
-#include <gsl/span>                 // for span
-#include <ldsgen/lds.hpp>           // for vdcorput, sphere
-#include <memory>                   // for unique_ptr, make_unique
-#include <sphere_n/sphere_n.hpp>    // for sphere_n, cylin_n, cylin_2
-#include <tuple>                    // for tuple
-#include <type_traits>              // for move, remove_reference<>::type
-#include <unordered_map>            // for unordered_map
-#include <variant>                  // for visit, variant
-#include <vector>                   // for vector
+#include <cassert>  // for assert
+#include <cmath>    // for cos, sin, sqrt
+#include <cmath>
+#include <gsl/span>  // for span
+#include <iostream>
+#include <ldsgen/lds.hpp>  // for vdcorput, sphere
+#include <memory>          // for unique_ptr, make_unique
+#include <mutex>
+#include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
+#include <tuple>                  // for tuple
+#include <type_traits>            // for move, remove_reference<>::type
+#include <unordered_map>          // for unordered_map
+#include <unordered_map>
+#include <variant>  // for visit, variant
+#include <vector>   // for vector
+#include <vector>
 #include <xtensor/xaccessible.hpp>  // for xconst_accessible
 #include <xtensor/xarray.hpp>       // for xtensor, xarray
 #include <xtensor/xbuilder.hpp>     // for linspace
@@ -21,6 +26,84 @@
 #include <xtensor/xmath.hpp>        // for cos, interp, pow, sin, numeri...
 #include <xtensor/xoperation.hpp>   // for xfunction_type_t, operator*
 #include <xtensor/xtensor.hpp>      // for xtensor_container
+
+// Global variables (equivalent to Python's module-level variables)
+const double PI = 3.14159265358979323846;
+const int N_POINTS = 300;
+std::vector<double> X(N_POINTS);
+std::vector<double> NEG_COSINE(N_POINTS);
+std::vector<double> SINE(N_POINTS);
+
+// Initialize global vectors (akin to initializing numpy arrays)
+void initializeGlobals() {
+    for (int i = 0; i < N_POINTS; ++i) {
+        double x = i * PI / (N_POINTS - 1);
+        X[i] = x;
+        NEG_COSINE[i] = -std::cos(x);
+        SINE[i] = std::sin(x);
+    }
+}
+
+// Cache for memoization
+std::unordered_map<int, std::vector<double>> cacheOdd;
+std::unordered_map<int, std::vector<double>> cacheEven;
+std::mutex cacheMutex;
+
+const std::vector<double> &getTpOdd(int n) {
+    std::lock_guard<std::mutex> lock(cacheMutex);
+    auto &cache = cacheOdd;
+    if (cache.find(n) != cache.end()) return cache[n];
+
+    std::vector<double> result;
+    if (n == 1) {
+        result = NEG_COSINE;
+    } else {
+        std::vector<double> tpMinus2 = getTpOdd(n - 2);
+        result.resize(N_POINTS);
+        for (int i = 0; i < N_POINTS; ++i) {
+            result[i] = ((n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1)) / n;
+        }
+    }
+    cache[n] = result;
+    return cache[n];
+}
+
+const std::vector<double> &getTpEven(int n) {
+    std::lock_guard<std::mutex> lock(cacheMutex);
+    auto &cache = cacheEven;
+    if (cache.find(n) != cache.end()) return cache[n];
+
+    std::vector<double> result;
+    if (n == 0) {
+        result = X;
+    } else {
+        std::vector<double> tpMinus2 = getTpEven(n - 2);
+        result.resize(N_POINTS);
+        for (int i = 0; i < N_POINTS; ++i) {
+            result[i] = ((n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1)) / n;
+        }
+    }
+    cache[n] = result;
+    return cache[n];
+}
+
+const std::vector<double> &getTp(int n) {
+    if (n % 2 == 0) {
+        return getTpEven(n);
+    } else {
+        return getTpOdd(n);
+    }
+}
+
+// int main() {
+//     initializeGlobals();
+//     std::cout << "Result for n=3: ";
+//     for (double val : getTp(3)) {
+//         std::cout << val << " ";
+//     }
+//     std::cout << std::endl;
+//     return 0;
+// }
 
 namespace lds2 {
     using gsl::span;
