@@ -1,41 +1,95 @@
 #include <stddef.h>  // for size_t
 
-#include <cassert>  // for assert
-#include <cmath>    // for cos, sin, sqrt
-#include <cmath>
-#include <gsl/span>  // for span
-#include <iostream>
-#include <ldsgen/lds.hpp>  // for vdcorput, sphere
-#include <memory>          // for unique_ptr, make_unique
-#include <mutex>
+#include <algorithm>
+#include <cassert>                // for assert
+#include <cmath>                  // for cos, sin, sqrt
+#include <gsl/span>               // for span
+#include <ldsgen/lds.hpp>         // for vdcorput, sphere
+#include <memory>                 // for unique_ptr, make_unique
 #include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
 #include <tuple>                  // for tuple
-#include <type_traits>            // for move, remove_reference<>::type
 #include <unordered_map>          // for unordered_map
-#include <unordered_map>
-#include <variant>  // for visit, variant
-#include <vector>   // for vector
-#include <vector>
-#include <xtensor/xaccessible.hpp>  // for xconst_accessible
-#include <xtensor/xarray.hpp>       // for xtensor, xarray
-#include <xtensor/xbuilder.hpp>     // for linspace
-#include <xtensor/xfunction.hpp>    // for xfunction
-#include <xtensor/xgenerator.hpp>   // for xgenerator
-#include <xtensor/xiterator.hpp>    // for linear_begin
-#include <xtensor/xlayout.hpp>      // for layout_type, layout_type::row...
-#include <xtensor/xmath.hpp>        // for cos, interp, pow, sin, numeri...
-#include <xtensor/xoperation.hpp>   // for xfunction_type_t, operator*
-#include <xtensor/xtensor.hpp>      // for xtensor_container
+#include <variant>                // for visit, variant
+#include <vector>                 // for vector
 
-// int main() {
-//     initializeGlobals();
-//     std::cout << "Result for n=3: ";
-//     for (double val : getTp(3)) {
-//         std::cout << val << " ";
-//     }
-//     std::cout << std::endl;
-//     return 0;
-// }
+// Global variables (equivalent to Python's module-level variables)
+static const double PI = 3.14159265358979323846;
+static const double HALF_PI = PI / 2.0;
+static const int N_POINTS = 300;
+static std::vector<double> X(N_POINTS);
+static std::vector<double> NEG_COSINE(N_POINTS);
+static std::vector<double> SINE(N_POINTS);
+
+// Initialize global vectors (akin to initializing numpy arrays)
+void initializeGlobals() {
+    for (int i = 0; i < N_POINTS; ++i) {
+        double x = i * PI / (N_POINTS - 1);
+        X[i] = x;
+        NEG_COSINE[i] = -std::cos(x);
+        SINE[i] = std::sin(x);
+    }
+}
+
+// Cache for memoization
+std::unordered_map<int, std::vector<double>> cacheOdd;
+std::unordered_map<int, std::vector<double>> cacheEven;
+std::mutex cacheMutex;
+
+const std::vector<double> &getTpOdd(int n) {
+    std::lock_guard<std::mutex> lock(cacheMutex);
+    auto &cache = cacheOdd;
+    if (cache.find(n) != cache.end()) return cache[n];
+
+    std::vector<double> result;
+    if (n == 1) {
+        result = NEG_COSINE;
+    } else {
+        std::vector<double> tpMinus2 = getTpOdd(n - 2);
+        result.resize(N_POINTS);
+        for (int i = 0; i < N_POINTS; ++i) {
+            result[i] = ((n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1)) / n;
+        }
+    }
+    cache[n] = result;
+    return cache[n];
+}
+
+const std::vector<double> &getTpEven(int n) {
+    std::lock_guard<std::mutex> lock(cacheMutex);
+    auto &cache = cacheEven;
+    if (cache.find(n) != cache.end()) return cache[n];
+
+    std::vector<double> result;
+    if (n == 0) {
+        result = X;
+    } else {
+        std::vector<double> tpMinus2 = getTpEven(n - 2);
+        result.resize(N_POINTS);
+        for (int i = 0; i < N_POINTS; ++i) {
+            result[i] = ((n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1)) / n;
+        }
+    }
+    cache[n] = result;
+    return cache[n];
+}
+
+const std::vector<double> &getTp(int n) {
+    if (n % 2 == 0) {
+        return getTpEven(n);
+    } else {
+        return getTpOdd(n);
+    }
+}
+
+// Helper function to mimic Rust's interp
+static double interp(const std::vector<double> &x, const std::vector<double> &X, double val) {
+    // A simple linear interpolation for demonstration purposes
+    auto pos = std::upper_bound(X.begin(), X.end(), val) - X.begin();
+    if (pos == 0) return x[0];
+    if (pos == X.size()) return x.back();
+    double fraction = (val - X[pos - 1]) / (X[pos] - X[pos - 1]);
+    return x[pos - 1] + fraction * (x[pos] - x[pos - 1]);
+}
 
 namespace lds2 {
     using gsl::span;
@@ -45,13 +99,6 @@ namespace lds2 {
     using std::sqrt;
     using std::unordered_map;
     using std::vector;
-
-    using Arr = xt::xarray<double, xt::layout_type::row_major>;
-    static const double PI = xt::numeric_constants<double>::PI;
-    static const double HALF_PI = PI / 2.0;
-    static const Arr X = xt::linspace(0.0, PI, 300);
-    static const Arr NEG_COSINE = -xt::cos(X);
-    static const Arr SINE = xt::sin(X);
 
     static auto get_tp(size_t n) -> const Arr & {
         static auto cache = unordered_map<size_t, Arr>{{0, X}, {1, NEG_COSINE}};

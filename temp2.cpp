@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <cmath>
-#include <iostream>
 #include <vector>
 
 // Assuming VdCorput and Sphere classes are defined elsewhere
