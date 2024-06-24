@@ -6,7 +6,7 @@
 #include <gsl/span>        // for span
 #include <ldsgen/lds.hpp>  // for vdcorput, sphere
 #include <memory>          // for unique_ptr, make_unique
-// #include <mutex>
+#include <mutex>
 #include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
 #include <unordered_map>          // for unordered_map
 #include <variant>                // for visit, variant
@@ -15,6 +15,9 @@
 // Global variables (equivalent to Python's module-level variables)
 static const double PI = 3.14159265358979323846;
 static const double HALF_PI = PI / 2.0;
+// Cache for memoization
+std::unordered_map<size_t, std::vector<double>> cacheOdd;
+std::unordered_map<size_t, std::vector<double>> cacheEven;
 
 class Globals {
   public:
@@ -24,10 +27,7 @@ class Globals {
   private:
     std::vector<double> NEG_COSINE;
     std::vector<double> SINE;
-    // Cache for memoization
-    std::unordered_map<size_t, std::vector<double>> cacheOdd;
-    std::unordered_map<size_t, std::vector<double>> cacheEven;
-    // std::mutex cacheMutex;
+    std::mutex cacheMutex;
 
   public:
     // Initialize global vectors (akin to initializing numpy arrays)
@@ -42,7 +42,7 @@ class Globals {
 
     const std::vector<double> &getTpOdd(size_t n) {
         // std::lock_guard<std::mutex> lock(this->cacheMutex);
-        auto &cache = this->cacheOdd;
+        auto &cache = ::cacheOdd;
         if (cache.find(n) != cache.end()) return cache[n];
 
         std::vector<double> result;
@@ -63,7 +63,7 @@ class Globals {
 
     const std::vector<double> &getTpEven(size_t n) {
         // std::lock_guard<std::mutex> lock(this->cacheMutex);
-        auto &cache = this->cacheEven;
+        auto &cache = ::cacheEven;
         if (cache.find(n) != cache.end()) return cache[n];
 
         std::vector<double> result;
@@ -83,6 +83,7 @@ class Globals {
     }
 
     const std::vector<double> &getTp(size_t n) {
+        std::lock_guard<std::mutex> lock(this->cacheMutex);
         return (n % 2 == 0)? this->getTpEven(n) : this->getTpOdd(n);
     }
 };
