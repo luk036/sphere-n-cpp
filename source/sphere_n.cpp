@@ -25,8 +25,8 @@ class Globals {
     std::vector<double> NEG_COSINE;
     std::vector<double> SINE;
     // Cache for memoization
-    std::unordered_map<int, std::vector<double>> cacheOdd;
-    std::unordered_map<int, std::vector<double>> cacheEven;
+    std::unordered_map<size_t, std::vector<double>> cacheOdd;
+    std::unordered_map<size_t, std::vector<double>> cacheEven;
     // std::mutex cacheMutex;
 
   public:
@@ -40,7 +40,7 @@ class Globals {
         }
     }
 
-    const std::vector<double> &getTpOdd(int n) {
+    const std::vector<double> &getTpOdd(size_t n) {
         // std::lock_guard<std::mutex> lock(this->cacheMutex);
         auto &cache = this->cacheOdd;
         if (cache.find(n) != cache.end()) return cache[n];
@@ -61,7 +61,7 @@ class Globals {
         return cache[n];
     }
 
-    const std::vector<double> &getTpEven(int n) {
+    const std::vector<double> &getTpEven(size_t n) {
         // std::lock_guard<std::mutex> lock(this->cacheMutex);
         auto &cache = this->cacheEven;
         if (cache.find(n) != cache.end()) return cache[n];
@@ -82,7 +82,7 @@ class Globals {
         return cache[n];
     }
 
-    inline const std::vector<double> &getTp(int n) {
+    inline const std::vector<double> &getTp(size_t n) {
         if (n % 2 == 0) {
             return this->getTpEven(n);
         } else {
