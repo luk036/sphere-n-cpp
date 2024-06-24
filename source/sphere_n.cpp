@@ -82,12 +82,8 @@ class Globals {
         return cache[n];
     }
 
-    inline const std::vector<double> &getTp(size_t n) {
-        if (n % 2 == 0) {
-            return this->getTpEven(n);
-        } else {
-            return this->getTpOdd(n);
-        }
+    const std::vector<double> &getTp(size_t n) {
+        return (n % 2 == 0)? this->getTpEven(n) : this->getTpOdd(n);
     }
 };
 
