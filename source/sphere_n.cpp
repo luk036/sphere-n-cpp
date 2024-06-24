@@ -130,13 +130,9 @@ namespace lds2 {
         assert(m >= 4);
         // Arr tp_minus2;
         if (m == 4) {
-            // tp_minus2 = NEG_COSINE;
-            // this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
             this->s_gen = std::make_unique<Sphere3>(base.subspan(1, 3));
         } else {
-            auto s_minus1 = std::make_unique<SphereN>(base.last(m - 1));
-            // tp_minus2 = s_minus1->get_tp_minus1();
-            this->s_gen = std::move(s_minus1);
+            this->s_gen = std::make_unique<SphereN>(base.last(m - 1));
         }
         this->n = m - 1;
         // this->tp = ((n - 1.0) * tp_minus2 + NEG_COSINE * xt::pow(SINE, n - 1.0))
