@@ -33,7 +33,7 @@ class Globals {
     // Initialize global vectors (akin to initializing numpy arrays)
     Globals() : X(N_POINTS), NEG_COSINE(N_POINTS), SINE(N_POINTS) {
         for (auto i = 0U; i < this->N_POINTS; ++i) {
-            double x = i * PI / (this->N_POINTS - 1);
+            double x = i * PI / double(this->N_POINTS - 1);
             this->X[i] = x;
             this->NEG_COSINE[i] = -std::cos(x);
             this->SINE[i] = std::sin(x);
@@ -52,9 +52,9 @@ class Globals {
             std::vector<double> tpMinus2 = this->getTpOdd(n - 2);
             result.resize(this->N_POINTS);
             for (auto i = 0U; i < this->N_POINTS; ++i) {
-                result[i]
-                    = ((n - 1) * tpMinus2[i] + this->NEG_COSINE[i] * std::pow(this->SINE[i], n - 1))
-                      / n;
+                result[i] = (double(n - 1) * tpMinus2[i]
+                             + this->NEG_COSINE[i] * std::pow(this->SINE[i], n - 1))
+                            / double(n);
             }
         }
         cache[n] = result;
@@ -73,9 +73,9 @@ class Globals {
             std::vector<double> tpMinus2 = this->getTpEven(n - 2);
             result.resize(this->N_POINTS);
             for (auto i = 0U; i < this->N_POINTS; ++i) {
-                result[i]
-                    = ((n - 1) * tpMinus2[i] + this->NEG_COSINE[i] * std::pow(this->SINE[i], n - 1))
-                      / n;
+                result[i] = (double(n - 1) * tpMinus2[i]
+                             + this->NEG_COSINE[i] * std::pow(this->SINE[i], n - 1))
+                            / double(n);
             }
         }
         cache[n] = result;
@@ -84,7 +84,7 @@ class Globals {
 
     const std::vector<double> &getTp(size_t n) {
         std::lock_guard<std::mutex> lock(this->cacheMutex);
-        return (n % 2 == 0)? this->getTpEven(n) : this->getTpOdd(n);
+        return (n % 2 == 0) ? this->getTpEven(n) : this->getTpOdd(n);
     }
 };
 
