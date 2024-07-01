@@ -28,7 +28,6 @@ target("test_sphere_n")
     set_kind("binary")
     add_deps("SphereN")
     add_includedirs("include", {public = true})
-    add_includedirs("../lds-gen-cpp/include", {public = true})
     add_files("test/source/*.cpp")
     add_packages("ms-gsl", "doctest")
 
