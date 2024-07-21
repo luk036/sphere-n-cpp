@@ -100,4 +100,4 @@ namespace lds2 {
         res.emplace_back(cos(xi));
         return res;
     }
-}
+}  // namespace lds2
