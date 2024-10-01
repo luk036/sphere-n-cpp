@@ -49,16 +49,16 @@ class Circle {
     }
 };
 
-class CylinN : public Circle {
+class CylindN : public Circle {
     int n;
 
   public:
-    CylinN(int n, std::vector<int> base) : Circle(base[1]), n(n) {
+    CylindN(int n, std::vector<int> base) : Circle(base[1]), n(n) {
         assert(n >= 1);
         vdc = VdCorput(base[0]);
         if (n > 1) {
             c_gen = std::vector<double>(n - 1);
-            CylinN(n - 1, std::vector<int>(base.begin() + 1, base.end())).swap(c_gen);
+            CylindN(n - 1, std::vector<int>(base.begin() + 1, base.end())).swap(c_gen);
         }
     }
     std::vector<double> pop() {
@@ -200,7 +200,7 @@ double run_lds(SphereN &spgen) {
     return discrep_2(hull, Triples);
 }
 
-double run_lds(CylinN &cygen) {
+double run_lds(CylindN &cygen) {
     int npoints = 600;
     std::vector<std::vector<double>> Triples(npoints);
     std::generate(Triples.begin(), Triples.end(), [&]() { return cygen.pop(); });
@@ -212,7 +212,7 @@ int main() {
     SphereN spgen(3, {2, 3, 5, 7});
     double measure = run_lds(spgen);
     assert(measure == 0.9125914);
-    CylinN cygen(3, {2, 3, 5, 7});
+    CylindN cygen(3, {2, 3, 5, 7});
     measure = run_lds(cygen);
     assert(measure == 1.0505837105828988);
     return 0;

@@ -8,8 +8,8 @@
 #include <iostream>
 #include <vector>
 
-// Include SphereN and CylinN headers assuming they are defined elsewhere
-#include "CylinN.h"
+// Include SphereN and CylindN headers assuming they are defined elsewhere
+#include "CylindN.h"
 #include "SphereN.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
@@ -59,7 +59,7 @@ double run_lds(SphereGenerator& spgen) {
     return discrep_2(triangles, triples);
 }
 
-// Ensure SphereN and CylinN classes' pop() methods return Vector3d
+// Ensure SphereN and CylindN classes' pop() methods return Vector3d
 void test_sphere_n() {
     SphereN spgen({2, 3, 5, 7});
     double measure = run_lds(spgen);
@@ -67,7 +67,7 @@ void test_sphere_n() {
 }
 
 void test_cylin_n() {
-    CylinN cygen({2, 3, 5, 7});
+    CylindN cygen({2, 3, 5, 7});
     double measure = run_lds(cygen);
     assert(std::abs(measure - 1.0505837105828988) < 1e-6);
 }

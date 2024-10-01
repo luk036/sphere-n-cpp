@@ -125,7 +125,7 @@ namespace lds2 {
         return res;
     }
 
-    auto CylinN::pop() -> vector<double> {
+    auto CylindN::pop() -> vector<double> {
         const auto cosphi = 2.0 * this->vdc.pop() - 1.0;  // map to [-1, 1];
         const auto sinphi = sqrt(1.0 - cosphi * cosphi);
         auto res = std::visit(
@@ -134,7 +134,7 @@ namespace lds2 {
                 if constexpr (std::is_same_v<T, Circle>) {
                     auto arr = t->pop();
                     return vector<double>(arr.begin(), arr.end());
-                } else if constexpr (std::is_same_v<T, CylinN>) {
+                } else if constexpr (std::is_same_v<T, CylindN>) {
                     return t->pop();
                 } else {
                     return vector<double>{};

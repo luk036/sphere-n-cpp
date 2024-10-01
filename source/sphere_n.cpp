@@ -165,28 +165,4 @@ namespace lds2 {
         res.emplace_back(cos(xi));
         return res;
     }
-
-    auto CylinN::pop() -> vector<double> {
-        const auto cosphi = 2.0 * this->vdc.pop() - 1.0;  // map to [-1, 1];
-        const auto sinphi = sqrt(1.0 - cosphi * cosphi);
-        auto res = std::visit(
-            [](auto &t) {
-                using T = std::decay_t<decltype(*t)>;
-                if constexpr (std::is_same_v<T, Circle>) {
-                    auto arr = t->pop();
-                    return vector<double>(arr.begin(), arr.end());
-                } else if constexpr (std::is_same_v<T, CylinN>) {
-                    return t->pop();
-                } else {
-                    return vector<double>{};
-                }
-            },
-            this->c_gen);
-        for (auto &xi : res) {
-            xi *= sinphi;
-        }
-        res.push_back(cosphi);
-        return res;
-    }
-
 }  // namespace lds2

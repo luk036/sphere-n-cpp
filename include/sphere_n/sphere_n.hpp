@@ -16,7 +16,6 @@
 namespace lds2 {
     // using Arr = xt::xarray<double, xt::layout_type::row_major>;
     using gsl::span;
-    using ldsgen::Circle;
     using ldsgen::Sphere;
     using ldsgen::VdCorput;
     using std::array;
@@ -135,32 +134,6 @@ namespace lds2 {
          *
          * @return vector<double>
          */
-        auto pop() -> vector<double>;
-
-        auto reseed(size_t seed) -> void;
-    };
-
-    class CylinN;
-
-    using CylinVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylinN>>;
-
-    /** Generate using cylindrical coordinate method */
-    class CylinN {
-      private:
-        VdCorput vdc;
-        CylinVariant c_gen;
-
-      public:
-        explicit CylinN(span<const size_t> base) : vdc{base[0]} {
-            const auto n = base.size();
-            assert(n >= 2);
-            if (n == 2) {
-                this->c_gen = std::make_unique<Circle>(base[1]);
-            } else {
-                this->c_gen = std::make_unique<CylinN>(base.last(n - 1));
-            }
-        }
-
         auto pop() -> vector<double>;
 
         auto reseed(size_t seed) -> void;

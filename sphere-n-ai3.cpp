@@ -95,9 +95,9 @@ class NSphere {
     Sphere3 sphere3{{base[1], base[2], base[3]}};
 };
 
-class CylinN {
+class CylindN {
   public:
-    CylinN(int n, const std::vector<int>& base) : n(n), base(base), seed(0) {}
+    CylindN(int n, const std::vector<int>& base) : n(n), base(base), seed(0) {}
 
     void reseed(int seed) { this->seed = seed; }
 
@@ -108,7 +108,7 @@ class CylinN {
         if (n == 2) {
             point = circle.pop();
         } else {
-            CylinN c(n - 1, std::vector<int>(base.begin() + 1, base.end()));
+            CylindN c(n - 1, std::vector<int>(base.begin() + 1, base.end()));
             point = c.pop();
         }
         for (int i = 0; i < point.size(); i++) {
