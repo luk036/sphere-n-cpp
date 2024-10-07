@@ -14,7 +14,7 @@
 
 // Global variables (equivalent to Python's module-level variables)
 static const double PI = 3.14159265358979323846;
-static const double HALF_PI = PI / 2.0;
+
 // Cache for memoization
 std::unordered_map<size_t, std::vector<double>> cacheOdd;
 std::unordered_map<size_t, std::vector<double>> cacheEven;
@@ -23,6 +23,7 @@ class Globals {
   public:
     const size_t N_POINTS = 300;
     std::vector<double> X;
+    std::vector<double> F2;
 
   private:
     std::vector<double> NEG_COSINE;
@@ -31,12 +32,13 @@ class Globals {
 
   public:
     // Initialize global vectors (akin to initializing numpy arrays)
-    Globals() : X(N_POINTS), NEG_COSINE(N_POINTS), SINE(N_POINTS) {
+    Globals() : X(N_POINTS), NEG_COSINE(N_POINTS), SINE(N_POINTS), F2(N_POINTS) {
         for (auto i = 0U; i < this->N_POINTS; ++i) {
             double x = i * PI / double(this->N_POINTS - 1);
             this->X[i] = x;
             this->NEG_COSINE[i] = -std::cos(x);
             this->SINE[i] = std::sin(x);
+            this->F2[i] = (x + this->NEG_COSINE[i] * this->SINE[i]) / 2.0;
         }
     }
 
@@ -117,9 +119,10 @@ namespace lds2 {
      * @return array<double, 4>
      */
     auto Sphere3::pop() -> array<double, 4> {
-        const auto ti = HALF_PI * this->vdc.pop();  // map to [0, pi/2];
-        const auto &tp = GL.getTp(3);
-        const auto xi = ::interp(GL.X, tp, ti);
+        const auto ti = PI * this->vdc.pop();  // map to [0, pi];
+        // const auto &tp = GL.getTp(2);
+        // const auto xi = ::interp(GL.X, tp, ti);
+        const auto xi = ::interp(GL.X, GL.F2, ti);
         const auto cosxi = cos(xi);
         const auto sinxi = sin(xi);
         const auto [s0, s1, s2] = this->sphere2.pop();
