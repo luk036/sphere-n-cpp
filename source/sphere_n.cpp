@@ -14,6 +14,7 @@
 
 // Global variables (equivalent to Python's module-level variables)
 static const double PI = 3.14159265358979323846;
+static const double HALF_PI = PI / 2.0;
 
 // Cache for memoization
 std::unordered_map<size_t, std::vector<double>> cacheOdd;
@@ -119,7 +120,7 @@ namespace lds2 {
      * @return array<double, 4>
      */
     auto Sphere3::pop() -> array<double, 4> {
-        const auto ti = PI * this->vdc.pop();  // map to [0, pi];
+        const auto ti = HALF_PI * this->vdc.pop();  // map to [0, pi/2];
         // const auto &tp = GL.getTp(2);
         // const auto xi = ::interp(GL.X, tp, ti);
         const auto xi = ::interp(GL.X, GL.F2, ti);

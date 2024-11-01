@@ -9,7 +9,7 @@ TEST_CASE("Sphere3") {
     const size_t base[] = {2, 3, 5};
     auto sp3gen = lds2::Sphere3(base);
     const auto res = sp3gen.pop();
-    CHECK_EQ(res[1], doctest::Approx(0.0));
+    CHECK_EQ(res[1], doctest::Approx(0.896665));
 }
 
 // TEST_CASE("HaltonN") {
