@@ -32,7 +32,7 @@ class Globals {
 
   public:
     // Initialize global vectors (akin to initializing numpy arrays)
-    Globals() : X(N_POINTS), NEG_COSINE(N_POINTS), SINE(N_POINTS), F2(N_POINTS) {
+    Globals() : X(N_POINTS), F2(N_POINTS), NEG_COSINE(N_POINTS), SINE(N_POINTS) {
         for (auto i = 0U; i < this->N_POINTS; ++i) {
             double x = i * PI / double(this->N_POINTS - 1);
             this->X[i] = x;
