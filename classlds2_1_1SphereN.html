@@ -65,7 +65,7 @@
             </li>
           </ul>
         </nav>
-<p>The <code><a href="classlds2_1_1_sphere_n.html" class="m-doc">SphereN</a></code> class is a sequence generator that generates points on a n-sphere. It uses instances of the <code>VdCorput</code> class to generate the sequence values and maps them to points on the n-sphere. The <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> method returns the next point on the n-sphere as a <code>std::vector&lt;double&gt;</code>, where the first three elements represent the x, y, and z coordinates of the point, etc. The <code>reseed()</code> method is used to reset the state of the sequence generator to a specific seed value.</p>
+<p>The <code><a href="classlds2_1_1SphereN.html" class="m-doc">SphereN</a></code> class is a sequence generator that generates points on a n-sphere. It uses instances of the <code>VdCorput</code> class to generate the sequence values and maps them to points on the n-sphere. The <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> method returns the next point on the n-sphere as a <code>std::vector&lt;double&gt;</code>, where the first three elements represent the x, y, and z coordinates of the point, etc. The <code><a href="classlds2_1_1SphereN.html#ac02708a9757cf5f205d324ee78817f23" class="m-doc">reseed()</a></code> method is used to reset the state of the sequence generator to a specific seed value.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
@@ -82,6 +82,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop</a>(</span><span class="m-doc-wrap">) -&gt; vector&lt; double &gt; -&gt; auto</span>
             </dt>
             <dd>pop</dd>
+            <dt id="ac02708a9757cf5f205d324ee78817f23">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac02708a9757cf5f205d324ee78817f23" class="m-doc-self">reseed</a>(</span><span class="m-doc-wrap">size_t seed) -&gt; void -&gt; auto</span>
+            </dt>
+            <dd><span></span></dd>
           </dl>
         </section>
         <section>
@@ -102,7 +106,7 @@
                 </tr>
               </tbody>
             </table>
-<p>The <code><a href="classlds2_1_1_sphere_n.html" class="m-doc">SphereN</a>(span&lt;const size_t&gt; &amp;base)</code> is a constructor for the <code><a href="classlds2_1_1_sphere_n.html" class="m-doc">SphereN</a></code> class. It takes one parameter <code>base</code>, which is used as the bases for generating the <a href="classlds2_1_1_sphere_n.html" class="m-doc">SphereN</a> sequence. The <code>explicit</code> keyword indicates that this constructor can only be used for explicit construction and not for implicit conversions.</p>
+<p>The <code><a href="classlds2_1_1SphereN.html" class="m-doc">SphereN</a>(span&lt;const size_t&gt; &amp;base)</code> is a constructor for the <code><a href="classlds2_1_1SphereN.html" class="m-doc">SphereN</a></code> class. It takes one parameter <code>base</code>, which is used as the bases for generating the <a href="classlds2_1_1SphereN.html" class="m-doc">SphereN</a> sequence. The <code>explicit</code> keyword indicates that this constructor can only be used for explicit construction and not for implicit conversions.</p>
           </div></section>
           <section class="m-doc-details" id="ae12486a0b04331c42266a22907c84bc7"><div>
             <h3>
@@ -117,7 +121,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>The <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> function is used to generate the next value in the sequence. In the <code>VdCorput</code> class, <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> increments the count and calculates the Van der Corput sequence value for that count and base. In the <code>Halton</code> class, <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point in the Halton sequence as a <code>std::array&lt;double, 2&gt;</code>. Similarly, in the <code>Circle</code> class, <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point on the unit circle as a <code>std::array&lt;double, 2&gt;</code>. In the <code>Sphere</code> class, <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point on the unit sphere as a <code>std::array&lt;double, 3&gt;</code>. And in the <code><a href="classlds2_1_1_sphere_n.html" class="m-doc">SphereN</a></code> class, <code><a href="classlds2_1_1_sphere_n.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point on the n-sphere as a <code>std::vector&lt;double&gt;</code>.</p>
+<p>The <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> function is used to generate the next value in the sequence. In the <code>VdCorput</code> class, <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> increments the count and calculates the Van der Corput sequence value for that count and base. In the <code>Halton</code> class, <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point in the Halton sequence as a <code>std::array&lt;double, 2&gt;</code>. Similarly, in the <code>Circle</code> class, <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point on the unit circle as a <code>std::array&lt;double, 2&gt;</code>. In the <code>Sphere</code> class, <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point on the unit sphere as a <code>std::array&lt;double, 3&gt;</code>. And in the <code><a href="classlds2_1_1SphereN.html" class="m-doc">SphereN</a></code> class, <code><a href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" class="m-doc">pop()</a></code> returns the next point on the n-sphere as a <code>std::vector&lt;double&gt;</code>.</p>
           </div></section>
         </section>
       </div>
@@ -164,7 +168,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Sphere_N. Created with <a href="https://doxygen.org/">Doxygen</a> 1.10.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Sphere_N. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>lds2::Sphere3 class | Sphere_N</title>
+  <title>sphere_n::Sphere_N class | Sphere_N</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,10 +49,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacelds2.html">lds2</a>::<wbr/></span>Sphere3 <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="sphere__n_8hpp.html">&lt;sphere_n/sphere_n.hpp&gt;</a></div>
+          <span class="m-breadcrumb"><a href="namespacesphere__n.html">sphere_n</a>::<wbr/></span>Sphere_N <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="greeter_8h.html">&lt;sphere_n/greeter.h&gt;</a></div>
         </h1>
-        <p>S(3) sequence generator.</p>
+        <p>A class for saying hello in multiple languages.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -65,81 +65,65 @@
             </li>
           </ul>
         </nav>
-<p>The <code><a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a></code> class is a sequence generator that generates points on a 3-sphere. It uses instances of the <code>VdCorput</code> class to generate the sequence values and maps them to points on the 3-sphere. The <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> method returns the next point on the 3-sphere as a <code>std::array&lt;double, 4&gt;</code>, where the first three elements represent the x, y, and z coordinates of the point, etc. The <code><a href="classlds2_1_1_sphere3.html#ac45ec1fa0525e821e7b01233e54783b1" class="m-doc">reseed()</a></code> method is used to reset the state of the sequence generator to a specific seed value.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a20acf3b7d589febcc22d1db792fcedfa" class="m-doc">Sphere3</a>(</span><span class="m-doc-wrap">span&lt;const size_t&gt; base) <span class="m-label m-flat m-info">explicit</span> </span>
+              <span class="m-doc-wrap-bumper"><a href="#abf132cb17628351e3cf859ce86137c54" class="m-doc">Sphere_N</a>(</span><span class="m-doc-wrap">std::string name)</span>
             </dt>
-            <dd>Construct a new <a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a> object.</dd>
+            <dd>Creates a new xn.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac45ec1fa0525e821e7b01233e54783b1" class="m-doc">reseed</a>(</span><span class="m-doc-wrap">size_t seed) -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6e3f1377bfa47121ee68ff00283249af" class="m-doc">greet</a>(</span><span class="m-doc-wrap"><a href="namespacesphere__n.html#a74347d1cb101a2e2db936b81866d10fc" class="m-doc">LanguageCode</a> lang = <a href="namespacesphere__n.html#a74347d1cb101a2e2db936b81866d10fcaaa85f1840e282d8a8304dbc2c0d7c9b2" class="m-doc">LanguageCode::<wbr />EN</a>) const -&gt; std::string</span>
             </dt>
-            <dd>reseed</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop</a>(</span><span class="m-doc-wrap">) -&gt; array&lt; double, 4 &gt; -&gt; auto</span>
-            </dt>
-            <dd>pop</dd>
+            <dd>Creates a localized string containing the greeting.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a20acf3b7d589febcc22d1db792fcedfa"><div>
+          <section class="m-doc-details" id="abf132cb17628351e3cf859ce86137c54"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> lds2::<wbr />Sphere3::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a20acf3b7d589febcc22d1db792fcedfa" class="m-doc-self">Sphere3</a>(</span><span class="m-doc-wrap">span&lt;const size_t&gt; base) <span class="m-label m-info">explicit</span> </span></span>
+              <span class="m-doc-wrap-bumper"> sphere_n::<wbr />Sphere_N::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abf132cb17628351e3cf859ce86137c54" class="m-doc-self">Sphere_N</a>(</span><span class="m-doc-wrap">std::string name)</span></span>
             </h3>
-            <p>Construct a new <a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a> object.</p>
+            <p>Creates a new xn.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">base&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td style="width: 1%">name&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the name to greet</td>
                 </tr>
               </tbody>
             </table>
-<p>The <code><a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a>(span&lt;const size_t&gt; &amp;base)</code> is a constructor for the <code><a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a></code> class. It takes one parameter <code>base</code>, which is used as the bases for generating the <a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a> sequence. The <code>explicit</code> keyword indicates that this constructor can only be used for explicit construction and not for implicit conversions.</p>
           </div></section>
-          <section class="m-doc-details" id="ac45ec1fa0525e821e7b01233e54783b1"><div>
+          <section class="m-doc-details" id="a6e3f1377bfa47121ee68ff00283249af"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto lds2::<wbr />Sphere3::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac45ec1fa0525e821e7b01233e54783b1" class="m-doc-self">reseed</a>(</span><span class="m-doc-wrap">size_t seed) -&gt; void</span></span>
+              <span class="m-doc-wrap-bumper">std::string sphere_n::<wbr />Sphere_N::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6e3f1377bfa47121ee68ff00283249af" class="m-doc-self">greet</a>(</span><span class="m-doc-wrap"><a href="namespacesphere__n.html#a74347d1cb101a2e2db936b81866d10fc" class="m-doc">LanguageCode</a> lang = <a href="namespacesphere__n.html#a74347d1cb101a2e2db936b81866d10fcaaa85f1840e282d8a8304dbc2c0d7c9b2" class="m-doc">LanguageCode::<wbr />EN</a>) const</span></span>
             </h3>
-            <p>reseed</p>
+            <p>Creates a localized string containing the greeting.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">seed&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td style="width: 1%">lang&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the language to greet in</td>
                 </tr>
               </tbody>
-            </table>
-<p>The <code><a href="classlds2_1_1_sphere3.html#ac45ec1fa0525e821e7b01233e54783b1" class="m-doc">reseed(size_<wbr />t seed)</a></code> function is used to reset the state of the sequence generator to a specific seed value. This allows the sequence generator to start generating the sequence from the beginning, or from a specific point in the sequence, depending on the value of the seed.</p>
-          </div></section>
-          <section class="m-doc-details" id="a5e5a5a78d5a032252b32b6c028658b86"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">auto lds2::<wbr />Sphere3::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc-self">pop</a>(</span><span class="m-doc-wrap">) -&gt; array&lt; double, 4 &gt;</span></span>
-            </h3>
-            <p>pop</p>
-            <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td>std::array&lt;double, 4&gt;</td>
+                  <th>Returns</th>
+                  <td>a string containing the greeting</td>
                 </tr>
               </tfoot>
             </table>
-<p>The <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> function is used to generate the next value in the sequence. In the <code>VdCorput</code> class, <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> increments the count and calculates the Van der Corput sequence value for that count and base. In the <code>Halton</code> class, <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> returns the next point in the Halton sequence as a <code>std::array&lt;double, 2&gt;</code>. Similarly, in the <code>Circle</code> class, <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> returns the next point on the unit circle as a <code>std::array&lt;double, 2&gt;</code>. In the <code>Sphere</code> class, <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> returns the next point on the unit sphere as a <code>std::array&lt;double, 3&gt;</code>. And in the <code><a href="classlds2_1_1_sphere3.html" class="m-doc">Sphere3</a></code> class, <code><a href="classlds2_1_1_sphere3.html#a5e5a5a78d5a032252b32b6c028658b86" class="m-doc">pop()</a></code> returns the next point on the 3-sphere as a <code>std::array&lt;double, 4&gt;</code>.</p>
           </div></section>
         </section>
       </div>
@@ -186,7 +170,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Sphere_N. Created with <a href="https://doxygen.org/">Doxygen</a> 1.10.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Sphere_N. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
