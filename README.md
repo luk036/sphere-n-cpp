@@ -1,7 +1,6 @@
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
-[![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Style/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Install/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![codecov](https://codecov.io/gh/luk036/sphere-n-cpp/graph/badge.svg?token=u0caEVx7c9)](https://codecov.io/gh/luk036/sphere-n-cpp)
 
