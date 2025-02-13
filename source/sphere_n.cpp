@@ -100,8 +100,9 @@ static double interp(const std::vector<double> &x, const std::vector<double> &X,
     auto len = std::distance(X.begin(), X.end());
     if (pos == 0) return x[0];
     if (pos == len) return x.back();
-    double fraction = (val - X[pos - 1]) / (X[pos] - X[pos - 1]);
-    return x[pos - 1] + fraction * (x[pos] - x[pos - 1]);
+    auto spos = size_t(pos);
+    double fraction = (val - X[spos - 1]) / (X[spos] - X[spos - 1]);
+    return x[spos - 1] + fraction * (x[spos] - x[spos - 1]);
 }
 
 namespace lds2 {
