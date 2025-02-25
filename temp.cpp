@@ -1,5 +1,5 @@
 namespace lds2 {
-    using gsl::span;
+    using std::span;
     using ldsgen::Circle;
     using ldsgen::Sphere;
     using ldsgen::VdCorput;
@@ -33,7 +33,7 @@ namespace lds2 {
         auto reseed(size_t seed) -> void;
     };
 
-    using gsl::span;
+    using std::span;
     using std::array;
     using std::cos;
     using std::sin;
@@ -57,7 +57,7 @@ namespace lds2 {
         return {sinxi * s0, sinxi * s1, sinxi * s2, cosxi};
     }
 
-    SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
+    SphereN::SphereN(std::span<const size_t> base) : vdc{base[0]} {
         const auto m = base.size();
         assert(m >= 4);
         // Arr tp_minus2;

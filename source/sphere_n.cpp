@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cassert>         // for assert
 #include <cmath>           // for cos, sin, sqrt
-#include <gsl/span>        // for span
+#include <span>        // for span
 #include <ldsgen/lds.hpp>  // for vdcorput, sphere
 #include <memory>          // for unique_ptr, make_unique
 #include <mutex>
@@ -106,7 +106,7 @@ static double interp(const std::vector<double> &x, const std::vector<double> &X,
 }
 
 namespace lds2 {
-    using gsl::span;
+    using std::span;
     using std::array;
     using std::cos;
     using std::sin;
@@ -131,7 +131,7 @@ namespace lds2 {
         return {sinxi * s0, sinxi * s1, sinxi * s2, cosxi};
     }
 
-    SphereN::SphereN(gsl::span<const size_t> base) : vdc{base[0]} {
+    SphereN::SphereN(std::span<const size_t> base) : vdc{base[0]} {
         const auto m = base.size();
         assert(m >= 4);
         // Arr tp_minus2;

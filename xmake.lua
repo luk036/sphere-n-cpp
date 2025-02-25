@@ -1,8 +1,8 @@
-set_languages("c++17")
+set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 -- add_requires("fmt", {alias = "fmt"})
-add_requires("microsoft-gsl", {alias = "ms-gsl"})
+-- add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("doctest", {alias = "doctest"})
 
 if is_mode("coverage") then
@@ -22,14 +22,14 @@ target("SphereN")
     add_includedirs("include", {public = true})
     add_includedirs("../lds-gen-cpp/include", {public = true})
     add_files("source/*.cpp")
-    add_packages("ms-gsl")
+    add_packages("doctest")
 
 target("test_sphere_n")
     set_kind("binary")
     add_deps("SphereN")
     add_includedirs("include", {public = true})
     add_files("test/source/*.cpp")
-    add_packages("ms-gsl", "doctest")
+    add_packages("doctest")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

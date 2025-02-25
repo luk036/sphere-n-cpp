@@ -4,7 +4,7 @@
 
 #include <array>        // for array
 #include <cassert>      // for assert
-#include <gsl/span>     // for span
+#include <span>     // for span
 #include <memory>       // for unique_ptr, make_unique
 #include <type_traits>  // for move, remove_reference<>::type
 #include <variant>      // for visit, variant
@@ -15,7 +15,7 @@
 
 namespace lds2 {
     // using Arr = xt::xarray<double, xt::layout_type::row_major>;
-    using gsl::span;
+    using std::span;
     using ldsgen::Circle;
     using ldsgen::VdCorput;
     using std::array;

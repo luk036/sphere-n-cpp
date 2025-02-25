@@ -6,7 +6,7 @@ CPMAddPackage(
 )
 
 # CPMAddPackage("gh:microsoft/GSL@3.1.0")
-CPMAddPackage("gh:microsoft/GSL@4.0.0")
+# CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 
 CPMAddPackage(
@@ -23,5 +23,5 @@ CPMAddPackage(
 # ${xtensor_SOURCE_DIR}") include_directories(${xtensor_SOURCE_DIR}/include) endif(xtensor_ADDED)
 
 # set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt GSL)
-set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL)
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt)
 # remember to turn off the warnings
