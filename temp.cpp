@@ -1,9 +1,9 @@
 namespace lds2 {
-    using std::span;
     using ldsgen::Circle;
     using ldsgen::Sphere;
     using ldsgen::VdCorput;
     using std::array;
+    using std::span;
     using std::vector;
 
     class Sphere3 {
@@ -33,10 +33,10 @@ namespace lds2 {
         auto reseed(size_t seed) -> void;
     };
 
-    using std::span;
     using std::array;
     using std::cos;
     using std::sin;
+    using std::span;
     using std::sqrt;
     using std::vector;
 

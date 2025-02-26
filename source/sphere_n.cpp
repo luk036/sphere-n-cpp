@@ -3,10 +3,10 @@
 #include <algorithm>
 #include <cassert>         // for assert
 #include <cmath>           // for cos, sin, sqrt
-#include <span>        // for span
 #include <ldsgen/lds.hpp>  // for vdcorput, sphere
 #include <memory>          // for unique_ptr, make_unique
 #include <mutex>
+#include <span>                   // for span
 #include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
 #include <unordered_map>          // for unordered_map
 #include <variant>                // for visit, variant
@@ -106,10 +106,10 @@ static double interp(const std::vector<double> &x, const std::vector<double> &X,
 }
 
 namespace lds2 {
-    using std::span;
     using std::array;
     using std::cos;
     using std::sin;
+    using std::span;
     using std::sqrt;
     using std::vector;
 

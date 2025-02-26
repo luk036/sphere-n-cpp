@@ -4,8 +4,8 @@
 
 #include <array>        // for array
 #include <cassert>      // for assert
-#include <span>     // for span
 #include <memory>       // for unique_ptr, make_unique
+#include <span>         // for span
 #include <type_traits>  // for move, remove_reference<>::type
 #include <variant>      // for visit, variant
 #include <vector>       // for vector
@@ -15,10 +15,10 @@
 
 namespace lds2 {
     // using Arr = xt::xarray<double, xt::layout_type::row_major>;
-    using std::span;
     using ldsgen::Sphere;
     using ldsgen::VdCorput;
     using std::array;
+    using std::span;
     using std::vector;
 
     /**
