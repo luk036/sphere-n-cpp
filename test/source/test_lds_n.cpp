@@ -27,8 +27,8 @@ TEST_CASE("CylindN") {
 }
 
 TEST_CASE("SphereN") {
-    const size_t base[] = {2, 3, 5, 7};
+    const size_t base[] = {2, 3, 5, 7, 11};
     auto spgen = lds2::SphereN(base);
     const auto res = spgen.pop();
-    CHECK_EQ(res[1], doctest::Approx(0.603115));
+    CHECK_EQ(res[1], doctest::Approx(0.320904));
 }
