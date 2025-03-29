@@ -1,4 +1,3 @@
-#include <sphere_n/greeter.h>  // for SphereN
 #include <sphere_n/version.h>  // for SPHERE_N_VERSION
 
 #include <cxxopts.hpp>    // for value, OptionAdder, Options, OptionValue
@@ -9,13 +8,6 @@
 #include <utility>        // for pair
 
 auto main(int argc, char **argv) -> int {
-    const std::unordered_map<std::string, sphere_n::LanguageCode> languages{
-        {"en", sphere_n::LanguageCode::EN},
-        {"de", sphere_n::LanguageCode::DE},
-        {"es", sphere_n::LanguageCode::ES},
-        {"fr", sphere_n::LanguageCode::FR},
-    };
-
     cxxopts::Options options(*argv, "A program to welcome the world!");
 
     std::string language;
@@ -41,15 +33,6 @@ auto main(int argc, char **argv) -> int {
         std::cout << "SphereN, version " << SPHERE_N_VERSION << std::endl;
         return 0;
     }
-
-    auto langIt = languages.find(language);
-    if (langIt == languages.end()) {
-        std::cerr << "unknown language code: " << language << std::endl;
-        return 1;
-    }
-
-    // sphere_n::Sphere_N sphere_n(name);
-    // std::cout << sphere_n.greet(langIt->second) << std::endl;
 
     return 0;
 }

@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
@@ -44,6 +44,6 @@ jobs:
       - name: collect code coverage
         run: |
           lcov --directory . --capture --output-file coverage.info # capture coverage info
-          lcov --remove coverage.info '/usr/*' 'standalone/*' 'bench/*' --output-file coverage.info # filter out system
+          lcov --ignore-errors unused --remove coverage.info '/usr/*' 'bench/*' --output-file coverage.info # filter out system
           lcov --list coverage.info #debug info
           bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

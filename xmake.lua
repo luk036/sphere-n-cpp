@@ -1,10 +1,9 @@
-set_languages("c++17")
+set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 -- add_requires("fmt", {alias = "fmt"})
-add_requires("microsoft-gsl", {alias = "ms-gsl"})
+-- add_requires("microsoft-gsl", {alias = "ms-gsl"})
 add_requires("doctest", {alias = "doctest"})
-add_requires("xtensor", {alias = "xtensor"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
@@ -14,6 +13,8 @@ if is_plat("linux") then
     set_warnings("all", "error")
     add_cxflags("-Wconversion", {force = true})
     -- add_cxflags("-fconcepts", {force = true})
+elseif is_plat("windows") then
+    add_cxflags("/EHsc /W4 /WX /wd4819 /wd4996", {force = true})
 end
 
 target("SphereN")
@@ -21,16 +22,14 @@ target("SphereN")
     add_includedirs("include", {public = true})
     add_includedirs("../lds-gen-cpp/include", {public = true})
     add_files("source/*.cpp")
-    add_packages("ms-gsl")
-    add_packages("xtensor")
+    add_packages("doctest")
 
 target("test_sphere_n")
     set_kind("binary")
     add_deps("SphereN")
     add_includedirs("include", {public = true})
-    add_includedirs("../lds-gen-cpp/include", {public = true})
     add_files("test/source/*.cpp")
-    add_packages("ms-gsl", "doctest", "xtensor")
+    add_packages("doctest")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

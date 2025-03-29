@@ -1,20 +1,39 @@
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
-[![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Style/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
 [![Actions Status](https://github.com/luk036/sphere-n-cpp/workflows/Install/badge.svg)](https://github.com/luk036/sphere-n-cpp/actions)
-[![codecov](https://codecov.io/gh/luk036/sphere-n-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/sphere-n-cpp)
+[![codecov](https://codecov.io/gh/luk036/sphere-n-cpp/graph/badge.svg?token=u0caEVx7c9)](https://codecov.io/gh/luk036/sphere-n-cpp)
 
 <p align="center">
   <img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" height="175" width="auto" />
 </p>
 
-# sphere-n-cpp
+# ⚽ sphere-n-cpp
 
-Low discrepany sequence for modern C++
+> Low discrepancy sequence for modern C++
+
+This library implements a generator for the generation of low-discrepancy sequences on n-dimensional spheres. Low-discrepancy sequences are employed to generate points that are distributed uniformly across a given space. This is a valuable technique in a number of fields, including computer graphics, numerical integration, and Monte Carlo simulations.
+
+The primary objective of this library is to facilitate the generation of points on the surface of spheres of varying dimensions, including three-dimensional and higher-dimensional spheres. The input required is the dimension of the sphere (n) and a set of base numbers to be used for the underlying sequence generation. The output is a series of vectors, with each vector representing a point on the surface of the n-dimensional sphere.
+
+The library achieves this through a combination of mathematical calculations and recursive structures. The library employs a number of fundamental components, including:
+
+1. The VdCorput sequence generator produces evenly distributed numbers between 0 and 1.
+2. The aforementioned numerical data is then mapped onto the surface of a sphere through the use of interpolation functions.
+3. The recursive structures, designated as Sphere3 and NSphere, facilitate the construction of higher-dimensional entities from their lower-dimensional counterparts.
+
+The primary logic flow commences with the construction of a SphereN object, which employs either a Sphere3 (for three-dimensional applications) or a recursive process to generate lower-dimensional spheres for higher dimensions. In the generation of points, the VdCorput sequence is employed to obtain a fundamental number, which is then subjected to a series of transformations involving the sine, cosine, and interpolation functions, thereby mapping it onto the surface of the sphere.
+
+Furthermore, the library furnishes traits and structures that facilitate the adaptable utilisation of the sphere generators. The SphereGen trait establishes a common interface for disparate sphere generators, whereas the NSphere and SphereN structures implement the actual generation logic.
+
+In conclusion, this library offers a sophisticated yet flexible approach to the generation of evenly distributed points on high-dimensional spheres, which can be advantageous in a multitude of scientific and computational applications.
+
+Requirements:
 
 - This library requires C++17 or above.
-- This library depends on Xtensor.
+- It uses [CPM.cmake](https://github.com/TheLartians/CPM.cmake) for dependency management.
+- It uses [fmt](https://github.com/fmtlib/fmt) for formatting.
+- It uses [doctest](https://github.com/onqtam/doctest) for unit testing.
 
 ## ✨ Features
 

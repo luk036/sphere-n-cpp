@@ -9,7 +9,7 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif()
 
-project(SphereN LANGUAGES CXX)
+project(Sphere_N LANGUAGES CXX)
 
 # --- Import tools ----
 

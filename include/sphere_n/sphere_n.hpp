@@ -4,8 +4,8 @@
 
 #include <array>        // for array
 #include <cassert>      // for assert
-#include <gsl/span>     // for span
 #include <memory>       // for unique_ptr, make_unique
+#include <span>         // for span
 #include <type_traits>  // for move, remove_reference<>::type
 #include <variant>      // for visit, variant
 #include <vector>       // for vector
@@ -15,11 +15,10 @@
 
 namespace lds2 {
     // using Arr = xt::xarray<double, xt::layout_type::row_major>;
-    using gsl::span;
-    using ldsgen::Circle;
     using ldsgen::Sphere;
     using ldsgen::VdCorput;
     using std::array;
+    using std::span;
     using std::vector;
 
     /**
@@ -60,7 +59,7 @@ namespace lds2 {
          * generator to start generating the sequence from the beginning, or from a
          * specific point in the sequence, depending on the value of the seed.
          *
-         * @param seed
+         * @param[in] seed
          */
         auto reseed(size_t seed) -> void {
             this->vdc.reseed(seed);
@@ -136,29 +135,8 @@ namespace lds2 {
          * @return vector<double>
          */
         auto pop() -> vector<double>;
-    };
 
-    class CylinN;
-
-    using CylinVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylinN>>;
-
-    /** Generate using cylindrical coordinate method */
-    class CylinN {
-        VdCorput vdc;
-        CylinVariant c_gen;
-
-      public:
-        explicit CylinN(span<const size_t> base) : vdc{base[0]} {
-            const auto n = base.size();
-            assert(n >= 2);
-            if (n == 2) {
-                this->c_gen = std::make_unique<Circle>(base[1]);
-            } else {
-                this->c_gen = std::make_unique<CylinN>(base.last(n - 1));
-            }
-        }
-
-        auto pop() -> vector<double>;
+        auto reseed(size_t seed) -> void;
     };
 
     // First 1000 prime numbers;
