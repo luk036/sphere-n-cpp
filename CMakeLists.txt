@@ -10,7 +10,7 @@ option(INSTALL_ONLY "Enable for installation only" OFF)
 # Note: update this to your new project's name and version
 project(
   Sphere_N
-  VERSION 1.0
+  VERSION 1.0.3
   LANGUAGES CXX
 )
 
