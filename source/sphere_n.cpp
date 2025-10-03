@@ -21,25 +21,28 @@ std::unordered_map<size_t, std::vector<double>> cacheOdd;
 std::unordered_map<size_t, std::vector<double>> cacheEven;
 
 class Globals {
-  public:
-    const size_t N_POINTS = 300;
+  private:
     std::vector<double> X;
     std::vector<double> F2;
-
-  private:
     std::vector<double> NEG_COSINE;
     std::vector<double> SINE;
     std::mutex cacheMutex;
+    std::unordered_map<size_t, std::vector<double>> cacheOdd;
+    std::unordered_map<size_t, std::vector<double>> cacheEven;
 
-  public:
+    public:
+    const std::vector<double>& getX() const { return X; }
+    const std::vector<double>& getF2() const { return F2; }
+    const std::vector<double> &getTp(size_t n);
+
     // Initialize global vectors (akin to initializing numpy arrays)
-    Globals() : X(N_POINTS), F2(N_POINTS), NEG_COSINE(N_POINTS), SINE(N_POINTS) {
-        for (auto i = 0U; i < this->N_POINTS; ++i) {
-            double x = i * PI / double(this->N_POINTS - 1);
-            this->X[i] = x;
-            this->NEG_COSINE[i] = -std::cos(x);
-            this->SINE[i] = std::sin(x);
-            this->F2[i] = (x + this->NEG_COSINE[i] * this->SINE[i]) / 2.0;
+    Globals() : X(lds2::N_POINTS), F2(lds2::N_POINTS), NEG_COSINE(lds2::N_POINTS), SINE(lds2::N_POINTS) {
+                for (auto i = 0U; i < lds2::N_POINTS; ++i) {
+            double x = i * PI / double(lds2::N_POINTS - 1);
+                        X[i] = x;
+                        NEG_COSINE[i] = -std::cos(x);
+                        SINE[i] = std::sin(x);
+                        F2[i] = (x + NEG_COSINE[i] * SINE[i]) / 2.0;
         }
     }
 
@@ -50,13 +53,13 @@ class Globals {
 
         std::vector<double> result;
         if (n == 1) {
-            result = this->NEG_COSINE;
+                        result = NEG_COSINE;
         } else {
-            std::vector<double> tpMinus2 = this->getTpOdd(n - 2);
-            result.resize(this->N_POINTS);
-            for (auto i = 0U; i < this->N_POINTS; ++i) {
-                result[i] = (double(n - 1) * tpMinus2[i]
-                             + this->NEG_COSINE[i] * std::pow(this->SINE[i], n - 1))
+                        std::vector<double> tpMinus2 = getTpOdd(n - 2);
+                        result.resize(lds2::N_POINTS);
+                        for (auto i = 0U; i < lds2::N_POINTS; ++i) {
+                                result[i] = (double(n - 1) * tpMinus2[i]
+                             + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
                             / double(n);
             }
         }
@@ -71,13 +74,13 @@ class Globals {
 
         std::vector<double> result;
         if (n == 0) {
-            result = this->X;
+                        result = X;
         } else {
             std::vector<double> tpMinus2 = this->getTpEven(n - 2);
-            result.resize(this->N_POINTS);
-            for (auto i = 0U; i < this->N_POINTS; ++i) {
-                result[i] = (double(n - 1) * tpMinus2[i]
-                             + this->NEG_COSINE[i] * std::pow(this->SINE[i], n - 1))
+                        result.resize(lds2::N_POINTS);
+                        for (auto i = 0U; i < lds2::N_POINTS; ++i) {
+                                result[i] = (double(n - 1) * tpMinus2[i]
+                             + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
                             / double(n);
             }
         }
@@ -85,11 +88,13 @@ class Globals {
         return cache[n];
     }
 
-    const std::vector<double> &getTp(size_t n) {
+    
+};
+
+    const std::vector<double> &Globals::getTp(size_t n) {
         std::lock_guard<std::mutex> lock(this->cacheMutex);
         return (n % 2 == 0) ? this->getTpEven(n) : this->getTpOdd(n);
     }
-};
 
 static Globals GL{};
 
@@ -124,7 +129,7 @@ namespace lds2 {
         const auto ti = HALF_PI * this->vdc.pop();  // map to [0, pi/2];
         // const auto &tp = GL.getTp(2);
         // const auto xi = ::interp(GL.X, tp, ti);
-        const auto xi = ::interp(GL.X, GL.F2, ti);
+                const auto xi = ::interp(GL.getX(), GL.getF2(), ti);
         const auto cosxi = cos(xi);
         const auto sinxi = sin(xi);
         const auto [s0, s1, s2] = this->sphere2.pop();
@@ -149,21 +154,18 @@ namespace lds2 {
         const auto vd = this->vdc.pop();
         const auto &tp = GL.getTp(this->n);
         const auto ti = tp[0] + (tp[tp.size() - 1] - tp[0]) * vd;  // map to [t0, tm-1];
-        const auto xi = ::interp(GL.X, tp, ti);
+        const auto xi = ::interp(GL.getX(), tp, ti);
         const auto sinphi = sin(xi);
-        auto res = std::visit(
-            [](auto &t) {
-                using T = std::decay_t<decltype(*t)>;
-                if constexpr (std::is_same_v<T, Sphere3>) {
-                    auto arr = t->pop();
-                    return vector<double>(arr.begin(), arr.end());
-                } else if constexpr (std::is_same_v<T, SphereN>) {
-                    return t->pop();
-                } else {
-                    return vector<double>{};
-                }
-            },
-            this->s_gen);
+
+        auto res = std::visit([](auto &t) {
+            using T = decltype(t->pop());
+            if constexpr (std::is_same_v<T, std::vector<double>>) {
+                return t->pop();
+            } else {
+                return to_vector(t->pop());
+            }
+        }, this->s_gen);
+
         for (auto &elem : res) {
             elem *= sinphi;
         }

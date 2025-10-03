@@ -12,6 +12,9 @@ end
 if is_plat("linux") then
     set_warnings("all", "error")
     add_cxflags("-Wconversion", {force = true})
+    -- add_cxflags("-nostdinc++", {force = true})
+    -- add_sysincludedirs(os.getenv("PREFIX") .. "/include/c++/v1", {public = true})
+    -- add_sysincludedirs(os.getenv("PREFIX") .. "/include", {public = true})
     -- add_cxflags("-fconcepts", {force = true})
 elseif is_plat("windows") then
     add_cxflags("/EHsc /W4 /WX /wd4819 /wd4996", {force = true})
@@ -30,6 +33,7 @@ target("test_sphere_n")
     add_includedirs("include", {public = true})
     add_files("test/source/*.cpp")
     add_packages("doctest")
+    add_tests("default")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

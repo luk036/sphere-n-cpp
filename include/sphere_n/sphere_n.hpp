@@ -14,12 +14,18 @@
 #include <ldsgen/lds.hpp>  // for VdCorput, Sphere
 
 namespace lds2 {
+    const size_t N_POINTS = 300;
     // using Arr = xt::xarray<double, xt::layout_type::row_major>;
     using ldsgen::Sphere;
     using ldsgen::VdCorput;
     using std::array;
     using std::span;
     using std::vector;
+
+    template <typename T, size_t N>
+    std::vector<T> to_vector(const std::array<T, N>& arr) {
+        return std::vector<T>(arr.begin(), arr.end());
+    }
 
     /**
      * @brief S(3) sequence generator
