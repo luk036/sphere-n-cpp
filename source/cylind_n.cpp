@@ -10,6 +10,16 @@ namespace lds2 {
     using std::sqrt;
     using std::vector;
 
+    /**
+     * Generate next point using cylindrical coordinates
+     *
+     * ```svgbob
+     *   VdCorput -> cosphi -> [sinphi*base_dim, cosphi]
+     *                |              /
+     *   BaseDim ----->+-------------+ 
+     *   Result: [x1, x2, ..., xn, z] using cylindrical method
+     * ```
+     */
     auto CylindN::pop() -> vector<double> {
         const auto cosphi = 2.0 * this->vdc.pop() - 1.0;  // map to [-1, 1];
         const auto sinphi = sqrt(1.0 - cosphi * cosphi);

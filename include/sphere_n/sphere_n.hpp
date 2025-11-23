@@ -37,6 +37,21 @@ namespace lds2 {
      * `std::array<double, 4>`, where the first three elements represent the x, y,
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
+     *
+     * ```svgbob
+     *        z
+     *        ^
+     *        |    . P(x,y,z,w)
+     *        |  .
+     *        |.
+     *        +---------> y
+     *       /|
+     *      / |
+     *     /  |
+     *    x   |
+     *        |
+     *        v w
+     * ```
      */
     class Sphere3 {
         VdCorput vdc;
@@ -54,6 +69,16 @@ namespace lds2 {
          * construction and not for implicit conversions.
          *
          * @param[in] base
+         *
+         * ```svgbob
+         *   Base: [b0, b1, b2]
+         *         |   |   |
+         *         v   v   v
+         *   VdCorput Sphere
+         *      |      |
+         *      +------+
+         *       3-sphere point
+         * ```
          */
         explicit Sphere3(span<const size_t> base);
 
@@ -86,6 +111,16 @@ namespace lds2 {
          * the next point on the 3-sphere as a `std::array<double, 4>`.
          *
          * @return std::array<double, 4>
+         *
+         * ```svgbob
+         *   Sequence: x0, x1, x2, ...
+         *              |
+         *              v
+         *   VdCorput -> Sphere3 -> [x, y, z, w]
+         *      |
+         *      v
+         *   Internal state
+         * ```
          */
         auto pop() -> array<double, 4>;
     };
@@ -104,6 +139,34 @@ namespace lds2 {
      * `std::vector<double>`, where the first three elements represent the x, y,
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
+     *
+     * ```svgbob
+     *        n-sphere: x1^2 + x2^2 + ... + xn^2 = 1
+     *        
+     *        . P(x1, x2, ..., xn)
+     *      .   .
+     *    .       .
+     *  .           .
+     * .             .
+     * .               .
+     * .                 .
+     * .                   .
+     * .                     .
+     * .                       .
+     *  .                       .
+     *    .                     .
+     *      .                   .
+     *        .                 .
+     *          .               .
+     *            .             .
+     *              .           .
+     *                .         .
+     *                  .       .
+     *                    .     .
+     *                      .   .
+     *                        . .
+     *                          .
+     * ```
      */
     class SphereN {
         size_t n;
@@ -122,6 +185,16 @@ namespace lds2 {
          * construction and not for implicit conversions.
          *
          * @param[in] base
+         *
+         * ```svgbob
+         *   Base: [b0, b1, b2, ..., bn]
+         *         |   |   |        |
+         *         v   v   v        v
+         *   VdCorput SphereGen (recursive)
+         *      |      |
+         *      +------+
+         *       n-sphere point
+         * ```
          */
         explicit SphereN(span<const size_t> base);
 
@@ -139,6 +212,16 @@ namespace lds2 {
          * the next point on the n-sphere as a `std::vector<double>`.
          *
          * @return vector<double>
+         *
+         * ```svgbob
+         *   Sequence: x0, x1, x2, ...
+         *              |
+         *              v
+         *   VdCorput -> SphereN -> [x1, x2, ..., xn]
+         *      |
+         *      v
+         *   Internal state
+         * ```
          */
         auto pop() -> vector<double>;
 

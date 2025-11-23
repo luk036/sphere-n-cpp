@@ -25,7 +25,25 @@ namespace lds2 {
 
     using CylindVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylindN>>;
 
-    /** Generate using cylindrical coordinate method */
+    /**
+     * Generate using cylindrical coordinate method
+     *
+     * ```svgbob
+     *     z
+     *     ^
+     *     |
+     *     |    . P(r,phi,z)
+     *     |  .
+     *     |.
+     *     +---------> y
+     *    /|
+     *   / |
+     *  /  |
+     * x   |
+     *     |
+     *     v rho
+     * ```
+     */
     class CylindN {
       private:
         VdCorput vdc;

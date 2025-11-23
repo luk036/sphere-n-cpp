@@ -118,12 +118,29 @@ namespace lds2 {
     using std::sqrt;
     using std::vector;
 
+    /**
+     * Sphere3 constructor - creates a 3-sphere generator
+     *
+     * ```svgbob
+     *   base[0] -> VdCorput
+     *              |
+     *   base[1], base[2] -> Sphere (for 2-sphere)
+     *   Result: 3-sphere point [x, y, z, w]
+     * ```
+     */
     Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]}, sphere2{base[1], base[2]} {}
 
     /**
-     * @brief
+     * @brief Generate next point on 3-sphere
      *
      * @return array<double, 4>
+     *
+     * ```svgbob
+     *   VdCorput -> ti -> xi -> [sin(xi)*s0, sin(xi)*s1, sin(xi)*s2, cos(xi)]
+     *                |
+     *   Sphere2 -----> [s0, s1, s2]
+     *   Result: [x, y, z, w] on 3-sphere
+     * ```
      */
     auto Sphere3::pop() -> array<double, 4> {
         const auto ti = HALF_PI * this->vdc.pop();  // map to [0, pi/2];
@@ -136,6 +153,16 @@ namespace lds2 {
         return {sinxi * s0, sinxi * s1, sinxi * s2, cosxi};
     }
 
+    /**
+     * SphereN constructor - creates an n-sphere generator using recursion
+     *
+     * ```svgbob
+     *   base[0] -> VdCorput
+     *              |
+     *   base[1..n] -> SphereGen (Sphere3 for n=4, recursive SphereN for n>4)
+     *   Result: n-sphere point [x1, x2, ..., xn+1]
+     * ```
+     */
     SphereN::SphereN(std::span<const size_t> base) : vdc{base[0]} {
         const auto m = base.size();
         assert(m >= 4);
@@ -150,6 +177,16 @@ namespace lds2 {
         // / n;
     }
 
+    /**
+     * Generate next point on n-sphere using recursive approach
+     *
+     * ```svgbob
+     *   VdCorput -> vd -> ti -> xi -> [sin(xi)*lower_dim, cos(xi)]
+     *                |              /
+     *   LowerDim --->+-------------+ 
+     *   Result: [x1, x2, ..., xn, xn+1] on n-sphere
+     * ```
+     */
     auto SphereN::pop() -> vector<double> {
         const auto vd = this->vdc.pop();
         const auto &tp = GL.getTp(this->n);
