@@ -35,11 +35,11 @@ target("test_sphere_n")
     add_packages("doctest")
     add_tests("default")
 
-target("standalone_sphere_n")
-    set_kind("binary")
-    add_deps("SphereN")
-    add_includedirs("include", {public = true})
-    add_files("standalone/source/*.cpp")
+-- target("standalone_sphere_n")
+--     set_kind("binary")
+--     add_deps("SphereN")
+--     add_includedirs("include", {public = true})
+--     add_files("standalone/source/*.cpp")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

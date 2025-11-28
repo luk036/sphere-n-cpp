@@ -13,8 +13,8 @@
 #include <vector>                 // for vector
 
 // Global variables (equivalent to Python's module-level variables)
-static const double PI = 3.14159265358979323846;
-static const double HALF_PI = PI / 2.0;
+static constexpr double PI = 3.14159265358979323846;
+static constexpr double HALF_PI = PI / 2.0;
 
 // Cache for memoization
 std::unordered_map<size_t, std::vector<double>> cacheOdd;
