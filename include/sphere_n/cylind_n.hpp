@@ -28,7 +28,7 @@ namespace lds2 {
     /**
      * Generate using cylindrical coordinate method
      *
-     * ```svgbob
+     * ```
      *     z
      *     ^
      *     |

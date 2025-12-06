@@ -7,6 +7,16 @@
 #include <unordered_map>  // for operator==, unordered_map, __hash_map_const...
 #include <utility>        // for pair
 
+/**
+ * @brief Main entry point for the SphereN standalone application
+ * 
+ * This program provides a command-line interface for the SphereN library.
+ * It currently supports displaying help information and version details.
+ * 
+ * @param argc Number of command-line arguments
+ * @param argv Array of command-line argument strings
+ * @return int Exit code (0 for success)
+ */
 auto main(int argc, char **argv) -> int {
     cxxopts::Options options(*argv, "A program to welcome the world!");
 

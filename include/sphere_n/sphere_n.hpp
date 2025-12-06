@@ -38,7 +38,7 @@ namespace lds2 {
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
      *
-     * ```svgbob
+     * ```
      *        z
      *        ^
      *        |    . P(x,y,z,w)
@@ -70,7 +70,7 @@ namespace lds2 {
          *
          * @param[in] base
          *
-         * ```svgbob
+         * ```
          *   Base: [b0, b1, b2]
          *         |   |   |
          *         v   v   v
@@ -112,7 +112,7 @@ namespace lds2 {
          *
          * @return std::array<double, 4>
          *
-         * ```svgbob
+         * ```
          *   Sequence: x0, x1, x2, ...
          *              |
          *              v
@@ -140,7 +140,7 @@ namespace lds2 {
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
      *
-     * ```svgbob
+     * ```
      *        n-sphere: x1^2 + x2^2 + ... + xn^2 = 1
      *
      *        . P(x1, x2, ..., xn)
@@ -186,7 +186,7 @@ namespace lds2 {
          *
          * @param[in] base
          *
-         * ```svgbob
+         * ```
          *   Base: [b0, b1, b2, ..., bn]
          *         |   |   |        |
          *         v   v   v        v
@@ -213,7 +213,7 @@ namespace lds2 {
          *
          * @return vector<double>
          *
-         * ```svgbob
+         * ```
          *   Sequence: x0, x1, x2, ...
          *              |
          *              v
