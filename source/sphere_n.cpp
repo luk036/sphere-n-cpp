@@ -88,7 +88,7 @@ class Globals {
         return cache[n];
     }
 
-    
+
 };
 
     const std::vector<double> &Globals::getTp(size_t n) {
@@ -183,7 +183,7 @@ namespace lds2 {
      * ```svgbob
      *   VdCorput -> vd -> ti -> xi -> [sin(xi)*lower_dim, cos(xi)]
      *                |              /
-     *   LowerDim --->+-------------+ 
+     *   LowerDim --->+-------------+
      *   Result: [x1, x2, ..., xn, xn+1] on n-sphere
      * ```
      */

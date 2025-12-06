@@ -16,7 +16,7 @@ namespace lds2 {
      * ```svgbob
      *   VdCorput -> cosphi -> [sinphi*base_dim, cosphi]
      *                |              /
-     *   BaseDim ----->+-------------+ 
+     *   BaseDim ----->+-------------+
      *   Result: [x1, x2, ..., xn, z] using cylindrical method
      * ```
      */

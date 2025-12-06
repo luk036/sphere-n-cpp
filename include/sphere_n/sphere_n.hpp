@@ -142,7 +142,7 @@ namespace lds2 {
      *
      * ```svgbob
      *        n-sphere: x1^2 + x2^2 + ... + xn^2 = 1
-     *        
+     *
      *        . P(x1, x2, ..., xn)
      *      .   .
      *    .       .
