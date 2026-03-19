@@ -62,13 +62,13 @@ namespace lds2 {
         /**
          * @brief Construct a new Sphere3 object
          *
-         * The `Sphere3(span<const size_t> &base)` is a constructor for
+         * The `Sphere3(span<const size_t> base)` is a constructor for
          * the `Sphere3` class. It takes one parameter `base`, which is
          * used as the bases for generating the Sphere3 sequence. The `explicit`
          * keyword indicates that this constructor can only be used for explicit
          * construction and not for implicit conversions.
          *
-         * @param[in] base
+         * @param[in] base Span containing base numbers for sequence generation
          *
          * ```
          *   Base: [b0, b1, b2]
@@ -178,13 +178,13 @@ namespace lds2 {
         /**
          * @brief Construct a new Sphere N object
          *
-         * The `SphereN(span<const size_t> &base)` is a constructor for
+         * The `SphereN(span<const size_t> base)` is a constructor for
          * the `SphereN` class. It takes one parameter `base`, which is
          * used as the bases for generating the SphereN sequence. The `explicit`
          * keyword indicates that this constructor can only be used for explicit
          * construction and not for implicit conversions.
          *
-         * @param[in] base
+         * @param[in] base Span containing base numbers for sequence generation
          *
          * ```
          *   Base: [b0, b1, b2, ..., bn]

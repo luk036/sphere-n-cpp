@@ -50,6 +50,27 @@ namespace lds2 {
         CylindVariant c_gen;
 
       public:
+        /**
+         * @brief Construct a new CylindN object
+         *
+         * The `CylindN(span<const size_t> base)` is a constructor for
+         * the `CylindN` class. It takes one parameter `base`, which is
+         * used as the bases for generating the cylindrical sequence. The `explicit`
+         * keyword indicates that this constructor can only be used for explicit
+         * construction and not for implicit conversions.
+         *
+         * @param[in] base Span containing base numbers for sequence generation
+         *
+         * ```
+         *   Base: [b0, b1, b2, ..., bn]
+         *         |   |   |        |
+         *         v   v   v        v
+         *   VdCorput CylindGen (recursive)
+         *      |      |
+         *      +------+
+         *       cylindrical point
+         * ```
+         */
         explicit CylindN(span<const size_t> base) : vdc{base[0]} {
             const auto n = base.size();
             assert(n >= 2);
@@ -62,6 +83,16 @@ namespace lds2 {
 
         auto pop() -> vector<double>;
 
+        /**
+         * @brief reseed
+         *
+         * The `reseed(size_t seed)` function is used to reset the state of the
+         * sequence generator to a specific seed value. This allows the sequence
+         * generator to start generating the sequence from the beginning, or from a
+         * specific point in the sequence, depending on the value of the seed.
+         *
+         * @param[in] seed The seed value to reset to
+         */
         auto reseed(size_t seed) -> void;
     };
 
