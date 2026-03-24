@@ -23,6 +23,13 @@ namespace lds2 {
 
     class CylindN;
 
+    /**
+     * @brief Variant type for cylindrical generator dispatching
+     *
+     * A std::variant that holds either a Circle (2D base case) or a CylindN
+     * (recursive case). Used for runtime polymorphism in the recursive
+     * cylindrical coordinate generation algorithm.
+     */
     using CylindVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylindN>>;
 
     /**
@@ -81,6 +88,26 @@ namespace lds2 {
             }
         }
 
+        /**
+         * @brief Generate the next point using cylindrical coordinate method
+         *
+         * Generates a uniformly distributed point using cylindrical coordinates.
+         * This method uses the Van der Corput sequence to generate the z-coordinate
+         * and recursively generates the base dimensions, then combines them using
+         * cylindrical coordinate transformation.
+         *
+         * @return vector<double> An (n+1)-dimensional point [x1, x2, ..., xn, z]
+         *
+         * ```
+         *   Sequence: v0, v1, v2, ...
+         *              |
+         *              v
+         *   VdCorput -> CylindN -> [x1, x2, ..., xn, z]
+         *      |      |
+         *      v      v
+         *   cos(phi)  sin(phi)
+         * ```
+         */
         auto pop() -> vector<double>;
 
         /**
