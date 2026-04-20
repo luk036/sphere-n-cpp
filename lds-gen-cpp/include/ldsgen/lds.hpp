@@ -115,4 +115,4 @@ namespace ldsgen {
          */
         void reseed(size_t seed) {}
     };
-}
+}  // namespace ldsgen

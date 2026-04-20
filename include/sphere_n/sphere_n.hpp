@@ -22,8 +22,7 @@ namespace lds2 {
     using std::span;
     using std::vector;
 
-    template <typename T, size_t N>
-    std::vector<T> to_vector(const std::array<T, N>& arr) {
+    template <typename T, size_t N> std::vector<T> to_vector(const std::array<T, N>& arr) {
         return std::vector<T>(arr.begin(), arr.end());
     }
 
