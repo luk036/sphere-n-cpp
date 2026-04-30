@@ -17,7 +17,7 @@ if is_plat("linux") then
     -- add_sysincludedirs(os.getenv("PREFIX") .. "/include", {public = true})
     -- add_cxflags("-fconcepts", {force = true})
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /W4 /WX", {force = true})
+    add_cxflags("/EHsc /W4 /WX /wd4459", {force = true})
 end
 
 target("SphereN")
