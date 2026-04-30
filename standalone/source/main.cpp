@@ -35,12 +35,12 @@ auto main(int argc, char** argv) -> int {
     auto result = options.parse(argc, argv);
 
     if (result["help"].as<bool>()) {
-        std::cout << options.help() << std::endl;
+        std::cout << options.help() << '\n';
         return 0;
     }
 
     if (result["version"].as<bool>()) {
-        std::cout << "SphereN, version " << SPHERE_N_VERSION << std::endl;
+        std::cout << "SphereN, version " << SPHERE_N_VERSION << '\n';
         return 0;
     }
 

@@ -51,7 +51,7 @@ namespace lds2 {
         for (auto& xi : res) {
             xi *= sinphi;
         }
-        res.push_back(cosphi);
+        res.emplace_back(cosphi);
         return res;
     }
 
