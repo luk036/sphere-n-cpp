@@ -44,7 +44,7 @@ namespace ldsgen {
      * Each point is represented as a 3-dimensional array [x, y, z] where
      * x² + y² + z² = 1.
      *
-     * ```
+     * @verbatim
      *        z
      *        ^
      *        |    . P(x,y,z)
@@ -54,7 +54,7 @@ namespace ldsgen {
      *       /
      *      /
      *     x
-     * ```
+     * @endverbatim
      */
     class Sphere {
       public:
@@ -85,7 +85,7 @@ namespace ldsgen {
      * of a unit circle using the Van der Corput sequence. Each point is represented
      * as a 2-dimensional array [x, y] where x² + y² = 1.
      *
-     * ```
+     * @verbatim
      *        y
      *        ^
      *        |   . P(x,y)
@@ -93,7 +93,7 @@ namespace ldsgen {
      *        | .
      *        |.
      *        +-------------> x
-     * ```
+     * @endverbatim
      */
     class Circle {
       public:

@@ -35,7 +35,7 @@ namespace lds2 {
     /**
      * Generate using cylindrical coordinate method
      *
-     * ```
+     * @verbatim
      *     z
      *     ^
      *     |
@@ -49,7 +49,7 @@ namespace lds2 {
      * x   |
      *     |
      *     v rho
-     * ```
+     * @endverbatim
      */
     class CylindN {
       private:
@@ -68,7 +68,7 @@ namespace lds2 {
          *
          * @param[in] base Span containing base numbers for sequence generation
          *
-         * ```
+         * @verbatim
          *   Base: [b0, b1, b2, ..., bn]
          *         |   |   |        |
          *         v   v   v        v
@@ -76,7 +76,7 @@ namespace lds2 {
          *      |      |
          *      +------+
          *       cylindrical point
-         * ```
+         * @endverbatim
          */
         explicit CylindN(span<const size_t> base) : vdc{base[0]} {
             const auto n = base.size();
@@ -98,7 +98,7 @@ namespace lds2 {
          *
          * @return vector<double> An (n+1)-dimensional point [x1, x2, ..., xn, z]
          *
-         * ```
+         * @verbatim
          *   Sequence: v0, v1, v2, ...
          *              |
          *              v
@@ -106,7 +106,7 @@ namespace lds2 {
          *      |      |
          *      v      v
          *   cos(phi)  sin(phi)
-         * ```
+         * @endverbatim
          */
         auto pop() -> vector<double>;
 

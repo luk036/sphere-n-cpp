@@ -37,7 +37,7 @@ namespace lds2 {
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
      *
-     * ```
+     * @verbatim
      *        z
      *        ^
      *        |    . P(x,y,z,w)
@@ -50,7 +50,7 @@ namespace lds2 {
      *    x   |
      *        |
      *        v w
-     * ```
+     * @endverbatim
      */
     class Sphere3 {
         VdCorput vdc;
@@ -69,7 +69,7 @@ namespace lds2 {
          *
          * @param[in] base Span containing base numbers for sequence generation
          *
-         * ```
+         * @verbatim
          *   Base: [b0, b1, b2]
          *         |   |   |
          *         v   v   v
@@ -77,7 +77,7 @@ namespace lds2 {
          *      |      |
          *      +------+
          *       3-sphere point
-         * ```
+         * @endverbatim
          */
         explicit Sphere3(span<const size_t> base);
 
@@ -111,7 +111,7 @@ namespace lds2 {
          *
          * @return std::array<double, 4>
          *
-         * ```
+         * @verbatim
          *   Sequence: x0, x1, x2, ...
          *              |
          *              v
@@ -119,7 +119,7 @@ namespace lds2 {
          *      |
          *      v
          *   Internal state
-         * ```
+         * @endverbatim
          */
         auto pop() -> array<double, 4>;
     };
@@ -139,7 +139,7 @@ namespace lds2 {
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
      *
-     * ```
+     * @verbatim
      *        n-sphere: x1^2 + x2^2 + ... + xn^2 = 1
      *
      *        . P(x1, x2, ..., xn)
@@ -165,7 +165,7 @@ namespace lds2 {
      *                      .   .
      *                        . .
      *                          .
-     * ```
+     * @endverbatim
      */
     class SphereN {
         size_t n;
@@ -185,7 +185,7 @@ namespace lds2 {
          *
          * @param[in] base Span containing base numbers for sequence generation
          *
-         * ```
+         * @verbatim
          *   Base: [b0, b1, b2, ..., bn]
          *         |   |   |        |
          *         v   v   v        v
@@ -193,7 +193,7 @@ namespace lds2 {
          *      |      |
          *      +------+
          *       n-sphere point
-         * ```
+         * @endverbatim
          */
         explicit SphereN(span<const size_t> base);
 
@@ -212,7 +212,7 @@ namespace lds2 {
          *
          * @return vector<double>
          *
-         * ```
+         * @verbatim
          *   Sequence: x0, x1, x2, ...
          *              |
          *              v
@@ -220,7 +220,7 @@ namespace lds2 {
          *      |
          *      v
          *   Internal state
-         * ```
+         * @endverbatim
          */
         auto pop() -> vector<double>;
 
