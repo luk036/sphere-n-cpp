@@ -78,7 +78,8 @@ namespace lds2 {
          *       cylindrical point
          * @endverbatim
          */
-        explicit CylindN(span<const size_t> base) : vdc{base[0]} {
+        explicit CylindN(span<const unsigned long> base)
+        : vdc{base[0]} {
             const auto n = base.size();
             assert(n >= 2);
             if (n == 2) {
@@ -120,7 +121,7 @@ namespace lds2 {
          *
          * @param[in] seed The seed value to reset to
          */
-        auto reseed(size_t seed) -> void;
+        auto reseed(unsigned long seed) -> void;
     };
 
 }  // namespace lds2

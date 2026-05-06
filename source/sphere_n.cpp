@@ -209,7 +209,7 @@ namespace lds2 {
      * [sin(xi)*s0, sin(xi)*s1, sin(xi)*s2, cos(xi)]
      * where [s0, s1, s2] is a point on the 2-sphere and xi is interpolated.
      */
-    Sphere3::Sphere3(span<const size_t> base) : vdc{base[0]}, sphere2{base[1], base[2]} {}
+    Sphere3::Sphere3(span<const unsigned long> base) : vdc{base[0]}, sphere2{base[1], base[2]} {}
 
     /**
      * @brief Generate the next point on the 3-sphere
@@ -250,7 +250,7 @@ namespace lds2 {
      * The recursive structure allows generation of points on any n-sphere
      * by nesting lower-dimensional sphere generators.
      */
-    SphereN::SphereN(std::span<const size_t> base) : vdc{base[0]} {
+    SphereN::SphereN(std::span<const unsigned long> base) : vdc{base[0]} {
         const auto m = base.size();
         assert(m >= 4);
         // Arr tp_minus2;
@@ -313,7 +313,7 @@ namespace lds2 {
      *
      * @param seed The seed value to reset to
      */
-    auto SphereN::reseed(size_t seed) -> void {
+    auto SphereN::reseed(unsigned long seed) -> void {
         this->vdc.reseed(seed);
         std::visit([seed](auto& t) { t->reseed(seed); }, this->s_gen);
     }

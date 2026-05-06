@@ -79,7 +79,7 @@ namespace lds2 {
          *       3-sphere point
          * @endverbatim
          */
-        explicit Sphere3(span<const size_t> base);
+        explicit Sphere3(span<const unsigned long> base);
 
         /**
          * @brief reseed
@@ -91,7 +91,7 @@ namespace lds2 {
          *
          * @param[in] seed
          */
-        auto reseed(size_t seed) -> void {
+        auto reseed(unsigned long seed) -> void {
             this->vdc.reseed(seed);
             this->sphere2.reseed(seed);
         }
@@ -195,7 +195,7 @@ namespace lds2 {
          *       n-sphere point
          * @endverbatim
          */
-        explicit SphereN(span<const size_t> base);
+        explicit SphereN(span<const unsigned long> base);
 
         /**
          * @brief pop
@@ -224,7 +224,7 @@ namespace lds2 {
          */
         auto pop() -> vector<double>;
 
-        auto reseed(size_t seed) -> void;
+        auto reseed(unsigned long seed) -> void;
     };
 
     // First 1000 prime numbers;

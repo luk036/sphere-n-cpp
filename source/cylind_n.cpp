@@ -64,7 +64,7 @@ namespace lds2 {
      *
      * @param seed The seed value to reset to
      */
-    auto CylindN::reseed(size_t seed) -> void {
+    auto CylindN::reseed(unsigned long seed) -> void {
         this->vdc.reseed(seed);
         std::visit([seed](auto& t) { t->reseed(seed); }, this->c_gen);
     }
