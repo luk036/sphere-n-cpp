@@ -2,13 +2,13 @@
 
 #include <stddef.h>  // for size_t
 
-#include <array>        // for array
-#include <cassert>      // for assert
-#include <memory>       // for unique_ptr, make_unique
-#include <span>         // for span
+#include <array>    // for array
+#include <cassert>  // for assert
+#include <memory>   // for unique_ptr, make_unique
+#include <span>     // for span
 // #include <type_traits>  // for move, remove_reference<>::type
-#include <variant>      // for visit, variant
-#include <vector>       // for vector
+#include <variant>  // for visit, variant
+#include <vector>   // for vector
 // #include <xtensor/xarray.hpp>  // for xtensor, xarray
 
 #include <ldsgen/lds.hpp>  // for VdCorput, Sphere
@@ -78,8 +78,7 @@ namespace lds2 {
          *       cylindrical point
          * @endverbatim
          */
-        explicit CylindN(span<const unsigned long> base)
-        : vdc{base[0]} {
+        explicit CylindN(span<const unsigned long> base) : vdc{base[0]} {
             const auto n = base.size();
             assert(n >= 2);
             if (n == 2) {
