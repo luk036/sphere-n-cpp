@@ -6,7 +6,7 @@
 #include <cassert>      // for assert
 #include <memory>       // for unique_ptr, make_unique
 #include <span>         // for span
-#include <type_traits>  // for move, remove_reference<>::type
+// #include <type_traits>  // for move, remove_reference<>::type
 #include <variant>      // for visit, variant
 #include <vector>       // for vector
 // #include <xtensor/xarray.hpp>  // for xtensor, xarray
