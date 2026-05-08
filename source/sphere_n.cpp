@@ -1,9 +1,7 @@
 #include <algorithm>
-#include <cstddef>  // for size_t
-
-#include <algorithm>
 #include <cassert>         // for assert
 #include <cmath>           // for cos, sin, sqrt
+#include <cstddef>         // for size_t
 #include <ldsgen/lds.hpp>  // for vdcorput, sphere
 #include <memory>          // for unique_ptr, make_unique
 #include <mutex>
@@ -104,7 +102,8 @@ class Globals {
             std::vector<double> tpMinus2 = getTpOdd(n - 2);
             result.resize(lds2::N_POINTS);
             for (auto i = 0U; i < lds2::N_POINTS; ++i) {
-                result[i] = (static_cast<double>(n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
+                result[i] = (static_cast<double>(n - 1) * tpMinus2[i]
+                             + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
                             / static_cast<double>(n);
             }
         }
@@ -134,7 +133,8 @@ class Globals {
             std::vector<double> tpMinus2 = this->getTpEven(n - 2);
             result.resize(lds2::N_POINTS);
             for (auto i = 0U; i < lds2::N_POINTS; ++i) {
-                result[i] = (static_cast<double>(n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
+                result[i] = (static_cast<double>(n - 1) * tpMinus2[i]
+                             + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
                             / static_cast<double>(n);
             }
         }

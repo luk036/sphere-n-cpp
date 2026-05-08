@@ -1,9 +1,8 @@
 #pragma once
 
-#include <cstddef>  // for size_t
-
 #include <array>    // for array
 #include <cassert>  // for assert
+#include <cstddef>  // for size_t
 #include <memory>   // for unique_ptr, make_unique
 #include <span>     // for span
 // #include <type_traits>  // for move, remove_reference<>::type
