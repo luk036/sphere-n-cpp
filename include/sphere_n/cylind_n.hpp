@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stddef.h>  // for size_t
+#include <cstddef>  // for size_t
 
 #include <array>    // for array
 #include <cassert>  // for assert

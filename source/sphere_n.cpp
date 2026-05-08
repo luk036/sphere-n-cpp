@@ -1,4 +1,5 @@
-#include <stddef.h>  // for size_t
+#include <algorithm>
+#include <cstddef>  // for size_t
 
 #include <algorithm>
 #include <cassert>         // for assert
@@ -6,6 +7,7 @@
 #include <ldsgen/lds.hpp>  // for vdcorput, sphere
 #include <memory>          // for unique_ptr, make_unique
 #include <mutex>
+#include <numbers>
 #include <span>                   // for span
 #include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
 #include <unordered_map>          // for unordered_map
@@ -14,7 +16,7 @@
 
 // Mathematical constants
 /** @brief π constant with high precision */
-static constexpr double PI = 3.14159265358979323846;
+static constexpr double PI = std::numbers::pi;
 /** @brief π/2 constant for angle calculations */
 static constexpr double HALF_PI = PI / 2.0;
 
@@ -73,7 +75,7 @@ class Globals {
     Globals()
         : X(lds2::N_POINTS), F2(lds2::N_POINTS), NEG_COSINE(lds2::N_POINTS), SINE(lds2::N_POINTS) {
         for (auto i = 0U; i < lds2::N_POINTS; ++i) {
-            double x = i * PI / double(lds2::N_POINTS - 1);
+            double x = i * PI / static_cast<double>(lds2::N_POINTS - 1);
             X[i] = x;
             NEG_COSINE[i] = -std::cos(x);
             SINE[i] = std::sin(x);
@@ -102,8 +104,8 @@ class Globals {
             std::vector<double> tpMinus2 = getTpOdd(n - 2);
             result.resize(lds2::N_POINTS);
             for (auto i = 0U; i < lds2::N_POINTS; ++i) {
-                result[i] = (double(n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
-                            / double(n);
+                result[i] = (static_cast<double>(n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
+                            / static_cast<double>(n);
             }
         }
         cache[n] = result;
@@ -132,8 +134,8 @@ class Globals {
             std::vector<double> tpMinus2 = this->getTpEven(n - 2);
             result.resize(lds2::N_POINTS);
             for (auto i = 0U; i < lds2::N_POINTS; ++i) {
-                result[i] = (double(n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
-                            / double(n);
+                result[i] = (static_cast<double>(n - 1) * tpMinus2[i] + NEG_COSINE[i] * std::pow(SINE[i], n - 1))
+                            / static_cast<double>(n);
             }
         }
         cache[n] = result;
@@ -151,7 +153,7 @@ class Globals {
  * @return const std::vector<double>& Tp values for dimension n
  */
 const std::vector<double>& Globals::getTp(size_t n) {
-    std::lock_guard<std::mutex> lock(this->cacheMutex);
+    std::scoped_lock lock(this->cacheMutex);
     return (n % 2 == 0) ? this->getTpEven(n) : this->getTpOdd(n);
 }
 
@@ -171,11 +173,11 @@ static Globals GL{};
  */
 static double interp(const std::vector<double>& x, const std::vector<double>& X, double val) {
     // A simple linear interpolation for demonstration purposes
-    auto pos = std::upper_bound(X.begin(), X.end(), val) - X.begin();
+    auto pos = std::ranges::upper_bound(X, val) - X.begin();
     auto len = std::distance(X.begin(), X.end());
     if (pos == 0) return x[0];
     if (pos == len) return x.back();
-    auto spos = size_t(pos);
+    auto spos = static_cast<size_t>(pos);
     double fraction = (val - X[spos - 1]) / (X[spos] - X[spos - 1]);
     return x[spos - 1] + fraction * (x[spos] - x[spos - 1]);
 }
