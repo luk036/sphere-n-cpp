@@ -31,13 +31,14 @@ elseif(MSVC)
     ${PROJECT_NAME}
     PUBLIC /W4
            /WX
+           /wd5285
            /wd4459
            /wd4819
            /wd4146
            /wd4127
            /wd4996
   )
-  target_compile_definitions(${PROJECT_NAME}Tests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
+  # target_compile_definitions(${PROJECT_NAME}Tests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
 endif()
 
 # ---- Add ${PROJECT_NAME}Tests ----
