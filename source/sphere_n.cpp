@@ -93,7 +93,7 @@ class Globals {
     const std::vector<double>& getTpOdd(size_t n) {
         // std::lock_guard<std::mutex> lock(this->cacheMutex);
         auto& cache = ::cacheOdd;
-        if (cache.find(n) != cache.end()) return cache[n];
+        if (cache.contains(n)) return cache[n];
 
         std::vector<double> result;
         if (n == 1) {
@@ -124,7 +124,7 @@ class Globals {
     const std::vector<double>& getTpEven(size_t n) {
         // std::lock_guard<std::mutex> lock(this->cacheMutex);
         auto& cache = ::cacheEven;
-        if (cache.find(n) != cache.end()) return cache[n];
+        if (cache.contains(n)) return cache[n];
 
         std::vector<double> result;
         if (n == 0) {
