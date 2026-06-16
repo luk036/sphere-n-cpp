@@ -24,7 +24,7 @@ set_target_properties(${PROJECT_NAME}Tests PROPERTIES CXX_STANDARD 20)
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   # target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wpedantic -Wextra -Werror)
   target_compile_options(
-    ${PROJECT_NAME} PUBLIC -Wall -Wextra -Werror -Wno-deprecated-literal-operator
+    ${PROJECT_NAME} PUBLIC -Wall -Wextra -Werror
   )
 elseif(MSVC)
   target_compile_options(${PROJECT_NAME} PUBLIC /utf-8 /W4 /WX)
