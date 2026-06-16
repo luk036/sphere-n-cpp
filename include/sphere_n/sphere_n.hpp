@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file sphere_n.hpp
+ *  @brief S(3) and S(n) sphere sequence generators using low-discrepancy sequences.
+ */
+
 #include <array>    // for array
 #include <cassert>  // for assert
 #include <cstddef>  // for size_t
@@ -21,6 +25,13 @@ namespace lds2 {
     using std::span;
     using std::vector;
 
+    /**
+     * @brief Convert a std::array to a std::vector.
+     * @tparam T Element type.
+     * @tparam N Array size.
+     * @param[in] arr The input array.
+     * @return A vector containing the same elements.
+     */
     template <typename T, size_t N> std::vector<T> to_vector(const std::array<T, N>& arr) {
         return std::vector<T>(arr.begin(), arr.end());
     }
@@ -226,7 +237,7 @@ namespace lds2 {
         auto reseed(unsigned long seed) -> void;
     };
 
-    // First 1000 prime numbers;
+    /** @brief First 1000 prime numbers for base selection in sequence generators. */
     static constexpr size_t PRIME_TABLE[] = {
         2,    3,    5,    7,    11,   13,   17,   19,   23,   29,   31,   37,   41,   43,   47,
         53,   59,   61,   67,   71,   73,   79,   83,   89,   97,   101,  103,  107,  109,  113,

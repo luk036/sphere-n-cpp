@@ -1,5 +1,9 @@
 #pragma once
 
+/** @file cylind_n.hpp
+ *  @brief Cylindrical coordinate method for generating points on N-dimensional spheres.
+ */
+
 #include <array>    // for array
 #include <cassert>  // for assert
 #include <cstddef>  // for size_t
@@ -28,6 +32,12 @@ namespace lds2 {
      * A std::variant that holds either a Circle (2D base case) or a CylindN
      * (recursive case). Used for runtime polymorphism in the recursive
      * cylindrical coordinate generation algorithm.
+     */
+    /**
+     * @brief Variant type for recursive cylindrical generator dispatching.
+     *
+     * Holds either a Circle (2D base case) or a CylindN (recursive N-dimensional case)
+     * for the cylindrical coordinate generation algorithm.
      */
     using CylindVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylindN>>;
 
