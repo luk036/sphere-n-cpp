@@ -47,6 +47,21 @@ namespace lds2 {
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
      *
+     * @dot
+     *   digraph sphere3_flow {
+     *     rankdir=LR;
+     *     bgcolor="transparent";
+     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+     *     vdc [label="VdCorput b_0", fillcolor="#a9cce3"];
+     *     s2 [label="Sphere (S^2)\nvdC + Circle", fillcolor="#d4e6f1"];
+     *     combine [label="Hopf fibration", fillcolor="#f9e79f"];
+     *     result [label="S^3 point\n(x,y,z,w)", fillcolor="#7fb3d8"];
+     *     vdc -> combine [label="phi"];
+     *     s2 -> combine [label="psi, theta"];
+     *     combine -> result;
+     *   }
+     * @enddot
+     *
      * @verbatim
      *        z
      *        ^
@@ -119,6 +134,11 @@ namespace lds2 {
          * as a `std::array<double, 3>`. And in the `Sphere3` class, `pop()` returns
          * the next point on the 3-sphere as a `std::array<double, 4>`.
          *
+         * @f[
+         *     (x, y, z, w) \in S^3,\quad x^2 + y^2 + z^2 + w^2 = 1
+         * @f]
+         * Uses the Hopf fibration to map from \f$(\phi, \psi, \eta)\f$ angles to \f$S^3\f$.
+         *
          * @return std::array<double, 4>
          *
          * @verbatim
@@ -148,6 +168,21 @@ namespace lds2 {
      * `std::vector<double>`, where the first three elements represent the x, y,
      * and z coordinates of the point, etc. The `reseed()` method is used to
      * reset the state of the sequence generator to a specific seed value.
+     *
+     * @dot
+     *   digraph sphere_n_flow {
+     *     rankdir=LR;
+     *     bgcolor="transparent";
+     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+     *     vdc [label="VdCorput b_0", fillcolor="#a9cce3"];
+     *     sgen [label="Sphere Gen\n(recursive)", fillcolor="#d4e6f1"];
+     *     combine [label="Combine:\nsqrt(1-z^2) * S^{n-1}", fillcolor="#f9e79f"];
+     *     result [label="S^n point\n(x_1,...,x_n)", fillcolor="#7fb3d8"];
+     *     vdc -> combine [label="z coord"];
+     *     sgen -> combine [label="S^{n-1} pt"];
+     *     combine -> result;
+     *   }
+     * @enddot
      *
      * @verbatim
      *        n-sphere: x1^2 + x2^2 + ... + xn^2 = 1
@@ -219,6 +254,10 @@ namespace lds2 {
          * In the `Sphere` class, `pop()` returns the next point on the unit sphere
          * as a `std::array<double, 3>`. And in the `SphereN` class, `pop()` returns
          * the next point on the n-sphere as a `std::vector<double>`.
+         *
+         * @f[
+         *     (x_1, x_2, \dots, x_n) \in S^{n-1},\quad \sum_{i=1}^n x_i^2 = 1
+         * @f]
          *
          * @return vector<double>
          *
