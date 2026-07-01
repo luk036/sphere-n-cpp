@@ -1,18 +1,15 @@
 #include <doctest/doctest.h>
 
-#include <sphere_n/cylind_n.hpp>
-#include <sphere_n/sphere_n.hpp>
-
 #include <array>
 #include <cmath>
 #include <memory>
 #include <numeric>
 #include <span>
+#include <sphere_n/cylind_n.hpp>
+#include <sphere_n/sphere_n.hpp>
 #include <vector>
 
-TEST_CASE("lds2 namespace constants") {
-    CHECK_EQ(lds2::N_POINTS, 300);
-}
+TEST_CASE("lds2 namespace constants") { CHECK_EQ(lds2::N_POINTS, 300); }
 
 TEST_CASE("PRIME_TABLE - first and last entries") {
     CHECK_EQ(lds2::PRIME_TABLE[0], 2);

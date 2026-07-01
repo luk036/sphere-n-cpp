@@ -41,40 +41,40 @@ namespace lds2 {
      */
     using CylindVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylindN>>;
 
-     /**
-      * Generate using cylindrical coordinate method
-      *
-      * @dot
-      *   digraph cylind_flow {
-      *     rankdir=LR;
-      *     bgcolor="transparent";
-      *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
-      *     vdc [label="VdCorput b_0", fillcolor="#a9cce3"];
-      *     cgen [label="Cylind Gen\n(recursive)", fillcolor="#d4e6f1"];
-      *     combine [label="Cylindrical:\nsqrt(1-z^2)*P_{n-1}", fillcolor="#f9e79f"];
-      *     result [label="Point\n(x1,...,xn,z)", fillcolor="#7fb3d8"];
-      *     vdc -> combine [label="z"];
-      *     cgen -> combine [label="P_{n-1}"];
-      *     combine -> result;
-      *   }
-      * @enddot
-      *
-      * @verbatim
-      *     z
-      *     ^
-      *     |
-      *     |    . P(r,phi,z)
-      *     |  .
-      *     |.
-      *     +---------> y
-      *    /|
-      *   / |
-      *  /  |
-      * x   |
-      *     |
-      *     v rho
-      * @endverbatim
-      */
+    /**
+     * Generate using cylindrical coordinate method
+     *
+     * @dot
+     *   digraph cylind_flow {
+     *     rankdir=LR;
+     *     bgcolor="transparent";
+     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+     *     vdc [label="VdCorput b_0", fillcolor="#a9cce3"];
+     *     cgen [label="Cylind Gen\n(recursive)", fillcolor="#d4e6f1"];
+     *     combine [label="Cylindrical:\nsqrt(1-z^2)*P_{n-1}", fillcolor="#f9e79f"];
+     *     result [label="Point\n(x1,...,xn,z)", fillcolor="#7fb3d8"];
+     *     vdc -> combine [label="z"];
+     *     cgen -> combine [label="P_{n-1}"];
+     *     combine -> result;
+     *   }
+     * @enddot
+     *
+     * @verbatim
+     *     z
+     *     ^
+     *     |
+     *     |    . P(r,phi,z)
+     *     |  .
+     *     |.
+     *     +---------> y
+     *    /|
+     *   / |
+     *  /  |
+     * x   |
+     *     |
+     *     v rho
+     * @endverbatim
+     */
     class CylindN {
       private:
         VdCorput vdc;
