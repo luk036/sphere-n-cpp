@@ -1,10 +1,10 @@
 #include <sphere_n/version.h>  // for SPHERE_N_VERSION
 
-#include <cxxopts.hpp>    // for value, OptionAdder, Options, OptionValue
-#include <iostream>       // for string, operator<<, endl, basic_ostream
-#include <memory>         // for shared_ptr
-#include <string>         // for char_traits, hash, operator==
-#include <utility>        // for pair
+#include <cxxopts.hpp>  // for value, OptionAdder, Options, OptionValue
+#include <iostream>     // for string, operator<<, endl, basic_ostream
+#include <memory>       // for shared_ptr
+#include <string>       // for char_traits, hash, operator==
+#include <utility>      // for pair
 
 /**
  * @brief Main entry point for the SphereN standalone application

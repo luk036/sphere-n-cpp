@@ -8,7 +8,6 @@
 #include <numbers>
 #include <span>                   // for span
 #include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
-
 #include <variant>                // for visit, variant
 #include <vector>                 // for vector
 
