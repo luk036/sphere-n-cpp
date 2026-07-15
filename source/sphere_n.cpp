@@ -8,7 +8,6 @@
 #include <numbers>
 #include <span>                   // for span
 #include <sphere_n/sphere_n.hpp>  // for sphere_n, cylin_n, cylin_2
-#include <unordered_map>          // for unordered_map
 #include <variant>                // for visit, variant
 #include <vector>                 // for vector
 
@@ -19,10 +18,11 @@ static constexpr double PI = std::numbers::pi;
 static constexpr double HALF_PI = PI / 2.0;
 
 // Global cache for memoization (module-level variables)
-/** @brief Cache for storing Tp values of odd dimensions */
-std::unordered_map<size_t, std::vector<double>> cacheOdd;
-/** @brief Cache for storing Tp values of even dimensions */
-std::unordered_map<size_t, std::vector<double>> cacheEven;
+// n decreases by 2 per parity, so index by n/2 gives dense 0-based access
+/** @brief Cache for storing Tp values of odd dimensions, indexed by n/2 */
+std::vector<std::vector<double>> cacheOdd;
+/** @brief Cache for storing Tp values of even dimensions, indexed by n/2 */
+std::vector<std::vector<double>> cacheEven;
 
 /**
  * @brief Global singleton class for precomputed trigonometric values and caching
@@ -38,8 +38,6 @@ class Globals {
     std::vector<double> NEG_COSINE;  ///< Precomputed -cos(x) values
     std::vector<double> SINE;        ///< Precomputed sin(x) values
     std::mutex cacheMutex;           ///< Mutex for thread-safe cache access
-    std::unordered_map<size_t, std::vector<double>> cacheOdd;   ///< Cache for odd n values
-    std::unordered_map<size_t, std::vector<double>> cacheEven;  ///< Cache for even n values
 
   public:
     /**
@@ -91,9 +89,9 @@ class Globals {
      * @return const std::vector<double>& Tp values for dimension n
      */
     const std::vector<double>& getTpOdd(size_t n) {
-        // std::lock_guard<std::mutex> lock(this->cacheMutex);
+        auto idx = n / 2;
         auto& cache = ::cacheOdd;
-        if (cache.contains(n)) return cache[n];
+        if (idx < cache.size() && !cache[idx].empty()) return cache[idx];
 
         std::vector<double> result;
         if (n == 1) {
@@ -107,8 +105,9 @@ class Globals {
                             / static_cast<double>(n);
             }
         }
-        cache[n] = result;
-        return cache[n];
+        if (idx >= cache.size()) cache.resize(idx + 1);
+        cache[idx] = result;
+        return cache[idx];
     }
 
     /**
@@ -122,9 +121,9 @@ class Globals {
      * @return const std::vector<double>& Tp values for dimension n
      */
     const std::vector<double>& getTpEven(size_t n) {
-        // std::lock_guard<std::mutex> lock(this->cacheMutex);
+        auto idx = n / 2;
         auto& cache = ::cacheEven;
-        if (cache.contains(n)) return cache[n];
+        if (idx < cache.size() && !cache[idx].empty()) return cache[idx];
 
         std::vector<double> result;
         if (n == 0) {
@@ -138,8 +137,9 @@ class Globals {
                             / static_cast<double>(n);
             }
         }
-        cache[n] = result;
-        return cache[n];
+        if (idx >= cache.size()) cache.resize(idx + 1);
+        cache[idx] = result;
+        return cache[idx];
     }
 };
 
