@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Sphere_N<span id="projectnumber">&#160;1.1.2;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Sphere_N<span id="projectnumber">&#160;1.1.3;  VERSION ${PROJECT_VERSION}</span>
    </div>
   </td>
  </tr>
@@ -106,6 +106,9 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>S(n) sequence generator. </p>
 <p>The <code><a class="el" href="classlds2_1_1SphereN.html" title="S(n) sequence generator.">SphereN</a></code> class is a sequence generator that generates points on a n-sphere. It uses instances of the <code>VdCorput</code> class to generate the sequence values and maps them to points on the n-sphere. The <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> method returns the next point on the n-sphere as a <code>std::vector&lt;double&gt;</code>, where the first three elements represent the x, y, and z coordinates of the point, etc. The <code><a class="el" href="classlds2_1_1SphereN.html#aac656bd7a8cd5ced2031f60a5e0d3e5b">reseed()</a></code> method is used to reset the state of the sequence generator to a specific seed value.</p>
+<div class="dotgraph">
+<img src="dot_inline_dotgraph_3.png" alt="dot_inline_dotgraph_3.png" border="0" usemap="#dot_inline_dotgraph_3.map"/>
+</div>
 <pre class="fragment">*        n-sphere: x1^2 + x2^2 + ... + xn^2 = 1
 *
 *        . P(x1, x2, ..., xn)
@@ -192,6 +195,11 @@ Public Member Functions</h2></td></tr>
 
 <p>pop </p>
 <p>The <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> function is used to generate the next value in the sequence. In the <code>VdCorput</code> class, <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> increments the count and calculates the Van der Corput sequence value for that count and base. In the <code>Halton</code> class, <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> returns the next point in the Halton sequence as a <code>std::array&lt;double, 2&gt;</code>. Similarly, in the <code>Circle</code> class, <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> returns the next point on the unit circle as a <code>std::array&lt;double, 2&gt;</code>. In the <code>Sphere</code> class, <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> returns the next point on the unit sphere as a <code>std::array&lt;double, 3&gt;</code>. And in the <code><a class="el" href="classlds2_1_1SphereN.html" title="S(n) sequence generator.">SphereN</a></code> class, <code><a class="el" href="classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7" title="pop">pop()</a></code> returns the next point on the n-sphere as a <code>std::vector&lt;double&gt;</code>.</p>
+<p class="formulaDsp">
+\[
+      (x_1, x_2, \dots, x_n) \in S^{n-1},\quad \sum_{i=1}^n x_i^2 = 1
+  \]
+</p>
 <dl class="section return"><dt>Returns</dt><dd>vector&lt;double&gt;</dd></dl>
 <pre class="fragment">*   Sequence: x0, x1, x2, ...
 *              |
