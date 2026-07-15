@@ -7,7 +7,7 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME LdsGen
-  GIT_TAG 1.2.2
+  GIT_TAG v1.2.4
   GITHUB_REPOSITORY luk036/lds-gen-cpp
   OPTIONS "INSTALL_ONLY YES" # create an installable target
 )
