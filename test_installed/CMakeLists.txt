@@ -19,8 +19,9 @@ include(../cmake/tools.cmake)
 
 include(../cmake/CPM.cmake)
 
-# Find dependencies first — Sphere_NConfig.cmake references fmt::fmt etc.
+# Find dependencies first — LdsGenConfig.cmake references spdlog::spdlog, fmt::fmt etc.
 find_package(fmt REQUIRED)
+find_package(spdlog REQUIRED)
 find_package(LdsGen REQUIRED)
 find_package(${PROJECT_NAME} REQUIRED)
 
