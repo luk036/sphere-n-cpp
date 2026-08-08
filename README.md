@@ -64,9 +64,8 @@ Requirements:
 Eventually, you can remove any unused files, such as the standalone directory or irrelevant github workflows for your project.
 Feel free to replace the License with one suited for your project.
 
-~~To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
-During development it is usually convenient to build all subprojects at once.~~
-
+The single root `CMakeLists.txt` defines the library, standalone executable and tests.
+During development it is usually convenient to build everything at once (the default).
 ### Build and run the standalone target
 
 Use the following command to build and run the executable target.
@@ -74,7 +73,7 @@ Use the following command to build and run the executable target.
 ```bash
 cmake -S. -B build
 cmake --build build
-./build/standalone/SphereN --help
+./build/Sphere_N --help
 ```
 
 ### Build and run test suite
@@ -84,14 +83,13 @@ Use the following commands from the project's root directory to run the test sui
 ```bash
 cmake -S. -B build
 cmake --build build
-cd build/test
-CTEST_OUTPUT_ON_FAILURE=1 ctest
+ctest --test-dir build --output-on-failure
 
 # or maybe simply call the executable:
-./build/test/SphereNTests
+./build/Sphere_NTests
 ```
 
-To collect code coverage information, run CMake with the `-DENABLE_TEST_COVERAGE=1` option.
+To collect code coverage information, run CMake with the `-DSPHERE_N_ENABLE_COVERAGE=ON` option (GCC/Clang only) and build the `coverage` target.
 
 ### Run clang-format
 
@@ -99,7 +97,7 @@ Use the following commands from the project's root directory to check and fix C+
 This requires _clang-format_, _cmake-format_ and _pyyaml_ to be installed on the current system.
 
 ```bash
-cmake -S . -B build/test
+cmake -S . -B build
 
 # view changes
 cmake --build build --target format
@@ -116,32 +114,23 @@ The documentation is automatically built and [published](https://luk036.github.i
 To manually build documentation, call the following command.
 
 ```bash
-cmake -S . -B build
+cmake -S . -B build -DSPHERE_N_BUILD_DOCS=ON
 cmake --build build --target GenerateDocs
 # view the docs
-open build/documentation/doxygen/html/index.html
+open build/doxygen/html/index.html
 ```
 
 To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.
 
 ### Additional tools
 
-The test and standalone subprojects include the [tools.cmake](cmake/tools.cmake) file which is used to import additional tools on-demand through CMake configuration arguments.
-The following are currently supported.
+#### Static analysis
 
-#### Sanitizers
+clang-tidy can be enabled by configuring CMake with `-DSPHERE_N_ENABLE_CLANG_TIDY=ON`; this provides a `clang-tidy` target that analyzes the public headers.
 
-Sanitizers can be enabled by configuring CMake with `-DUSE_SANITIZER=<Address | Memory | MemoryWithOrigins | Undefined | Thread | Leak | 'Address;Undefined'>`.
+#### Code coverage
 
-#### Static Analyzers
-
-Static Analyzers can be enabled by setting `-DUSE_STATIC_ANALYZER=<clang-tidy | iwyu | cppcheck>`, or a combination of those in quotation marks, separated by semicolons.
-By default, analyzers will automatically find configuration files such as `.clang-format`.
-Additional arguments can be passed to the analyzers by setting the `CLANG_TIDY_ARGS`, `IWYU_ARGS` or `CPPCHECK_ARGS` variables.
-
-#### Ccache
-
-Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
+Code coverage (GCC/Clang, via gcovr) can be enabled by configuring CMake with `-DSPHERE_N_ENABLE_COVERAGE=ON`; this provides a `coverage` target that runs the tests and writes an HTML report to `build/coverage/index.html`.
 
 ## Related projects and alternatives
 
