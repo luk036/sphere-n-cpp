@@ -1,30 +1,20 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14)
 
-# ---- Include guards ----
+project(Sphere_NInstalledTest LANGUAGES CXX)
 
-if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
-  message(
-    FATAL_ERROR
-      "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
-  )
-endif()
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-project(Sphere_N LANGUAGES CXX)
-
-# --- Import tools ----
-
-include(../cmake/tools.cmake)
-
-# ---- Dependencies (all installed by the parent build) ----
-
-include(../cmake/CPM.cmake)
-
-# Find dependencies first — LdsGenConfig.cmake references spdlog::spdlog, fmt::fmt etc.
+# Find dependencies first - Sphere_NConfig.cmake references fmt and LdsGen (installed alongside the
+# library by `cmake --install`).
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(LdsGen REQUIRED)
-find_package(${PROJECT_NAME} REQUIRED)
+find_package(Sphere_N REQUIRED)
 
-set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt)
+add_executable(sphere_n_installed_test main.cpp)
+target_link_libraries(sphere_n_installed_test PRIVATE Sphere_N::Sphere_N)
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../standalone ${CMAKE_BINARY_DIR}/test_installed)
+enable_testing()
+add_test(NAME sphere_n_installed_test COMMAND sphere_n_installed_test)
