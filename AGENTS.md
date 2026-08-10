@@ -47,9 +47,8 @@ cmake --build build --target fix-format  # Apply
 
 ### Static Analysis
 ```bash
-cmake -S . -B build -DUSE_STATIC_ANALYZER=clang-tidy
-cmake -S . -B build -DUSE_STATIC_ANALYZER=iwyu
-cmake -S . -B build -DUSE_STATIC_ANALYZER=cppcheck
+cmake -S . -B build -DSPHERE_N_ENABLE_CLANG_TIDY=ON
+cmake --build build --target clang-tidy
 ```
 
 ### Build with Sanitizers
