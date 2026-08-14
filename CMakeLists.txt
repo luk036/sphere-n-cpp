@@ -40,17 +40,16 @@ option(SPHERE_N_ENABLE_COVERAGE "Enable coverage reporting" OFF)
 # Dependencies
 # ---------------------------------------------------------------------------
 
-# Download CPM.cmake for reproducible dependency management
-# see https://github.com/cpm-cmake/CPM.cmake for more info
+# Download CPM.cmake for reproducible dependency management see
+# https://github.com/cpm-cmake/CPM.cmake for more info
 set(CPM_DOWNLOAD_VERSION 0.38.5)
 set(CPM_HASH_SUM "192aa0ccdc57dfe75bd9e4b176bf7fb5692fd2b3e3f7b09c74856fc39572b31c")
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
 if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
   message(STATUS "Downloading CPM.cmake to ${CPM_DOWNLOAD_LOCATION}")
-  file(
-    DOWNLOAD https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
-             ${CPM_DOWNLOAD_LOCATION}
-    EXPECTED_HASH SHA256=${CPM_HASH_SUM}
+  file(DOWNLOAD
+       https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
+       ${CPM_DOWNLOAD_LOCATION} EXPECTED_HASH SHA256=${CPM_HASH_SUM}
   )
 endif()
 include(${CPM_DOWNLOAD_LOCATION})
@@ -72,10 +71,10 @@ else()
   )
 endif()
 
-# LdsGen provides the low-discrepancy sequence generators used across the public headers.
-# LdsGen's logger uses spdlog and queries the plain `spdlog` target; building spdlog from source
-# first (rather than finding a system one, which only provides spdlog::spdlog) makes that target
-# exist and avoids an ALIAS/IMPORTED target collision.
+# LdsGen provides the low-discrepancy sequence generators used across the public headers. LdsGen's
+# logger uses spdlog and queries the plain `spdlog` target; building spdlog from source first
+# (rather than finding a system one, which only provides spdlog::spdlog) makes that target exist and
+# avoids an ALIAS/IMPORTED target collision.
 CPMAddPackage(
   NAME spdlog
   GIT_TAG v1.17.0
@@ -98,8 +97,7 @@ set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt)
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(GLOB_RECURSE headers CONFIGURE_DEPENDS
-     "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
+file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
      "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
 )
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
@@ -170,8 +168,8 @@ if(SPHERE_N_BUILD_STANDALONE)
   add_executable(Sphere_NStandalone standalone/source/main.cpp)
   set_target_properties(Sphere_NStandalone PROPERTIES OUTPUT_NAME "Sphere_N" CXX_STANDARD 20)
   target_include_directories(Sphere_NStandalone SYSTEM PRIVATE ${CXXOPTS_INCLUDE_DIRS})
-  target_link_libraries(Sphere_NStandalone PRIVATE ${PROJECT_NAME}::${PROJECT_NAME}
-                                                   cxxopts::cxxopts ${SPECIFIC_LIBS}
+  target_link_libraries(
+    Sphere_NStandalone PRIVATE ${PROJECT_NAME}::${PROJECT_NAME} cxxopts::cxxopts ${SPECIFIC_LIBS}
   )
   target_enable_warnings(Sphere_NStandalone)
 endif()
@@ -201,8 +199,8 @@ if(SPHERE_N_BUILD_TESTS)
 
   file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS "test/source/*.cpp")
   add_executable(Sphere_NTests ${TEST_SOURCES})
-  target_link_libraries(Sphere_NTests PRIVATE doctest::doctest ${PROJECT_NAME}::${PROJECT_NAME}
-                                               ${SPECIFIC_LIBS}
+  target_link_libraries(
+    Sphere_NTests PRIVATE doctest::doctest ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
   )
   set_target_properties(Sphere_NTests PROPERTIES CXX_STANDARD 20)
   target_enable_warnings(Sphere_NTests)
@@ -218,8 +216,7 @@ if(SPHERE_N_ENABLE_CLANG_TIDY)
   if(CLANG_TIDY)
     add_custom_target(
       clang-tidy
-      COMMAND ${CLANG_TIDY} --extra-arg=-std=c++20
-              --extra-arg=-I${CMAKE_CURRENT_SOURCE_DIR}/include
+      COMMAND ${CLANG_TIDY} --extra-arg=-std=c++20 --extra-arg=-I${CMAKE_CURRENT_SOURCE_DIR}/include
               ${CMAKE_CURRENT_SOURCE_DIR}/include/sphere_n/*.hpp
       COMMENT "Running clang-tidy static analysis"
     )
@@ -287,13 +284,15 @@ if(SPHERE_N_ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleCl
       coverage
       COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
       COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/coverage
-      COMMAND ${GCOVR_PATH} --root ${PROJECT_SOURCE_DIR} --html-details
-              ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/
-              ${extra_gcovr_args}
+      COMMAND
+        ${GCOVR_PATH} --root ${PROJECT_SOURCE_DIR} --html-details
+        ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/ ${extra_gcovr_args}
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       COMMENT "Generating coverage report in ${CMAKE_BINARY_DIR}/coverage/index.html"
     )
   else()
-    message(WARNING "gcovr not found - coverage target unavailable. Install with: pip install gcovr")
+    message(
+      WARNING "gcovr not found - coverage target unavailable. Install with: pip install gcovr"
+    )
   endif()
 endif()
