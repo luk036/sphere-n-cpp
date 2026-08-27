@@ -156,6 +156,15 @@ namespace lds2 {
 
     class SphereN;
 
+    /**
+     * @brief Holds one of the sphere implementations selected at runtime.
+     *
+     * @note Type erasure via std::variant (sum-type polymorphism): a closed set of
+     * sphere implementations (Sphere3 / SphereN) is selected and dispatched with
+     * std::visit — an alternative to a virtual class hierarchy (no vtable,
+     * exhaustive handling). SphereN stores its recursive lower-dimensional
+     * generator in this variant and visitors switch on the active alternative.
+     */
     using SphereVariant = std::variant<std::unique_ptr<Sphere3>, std::unique_ptr<SphereN>>;
 
     /**
