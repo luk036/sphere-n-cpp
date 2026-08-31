@@ -92,7 +92,7 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME LdsGen
-  GIT_TAG v1.2.5
+  GIT_TAG v1.2.6
   GITHUB_REPOSITORY luk036/lds-gen-cpp
   OPTIONS "LDSGEN_BUILD_TESTS OFF" "LDSGEN_BUILD_STANDALONE OFF"
 )
@@ -150,7 +150,7 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 12.1.0" "LdsGen 1.2.5"
+  DEPENDENCIES "fmt 12.1.0" "LdsGen 1.2.6"
 )
 
 # ---------------------------------------------------------------------------
