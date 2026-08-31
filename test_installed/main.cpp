@@ -1,7 +1,7 @@
 #include <sphere_n/version.h>
 
 #include <cassert>
-#include <sphere_n/sphere_n.hpp>
+#include <ldsgen/lds.hpp>
 
 auto main() -> int {
     assert(SPHERE_N_VERSION_MAJOR == 1);
