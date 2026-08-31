@@ -85,8 +85,8 @@ xmake run test_sphere_n
 
 1. Primary header for this source
 2. System headers (`<vector>`, `<array>`, `<span>`, etc.)
-3. External libraries (`<ldsgen/lds.hpp>`, `<fmt/format.h>`)
-4. Project headers (`<sphere_n/sphere_n.hpp>`)
+3. External libraries (`<ldsgen/lds.hpp>`, `<ldsgen/sphere_n.hpp>`, `<fmt/format.h>`)
+4. Project headers (`<sphere_n/cylind_n.hpp>`)
 
 ### Naming Conventions
 
@@ -95,10 +95,10 @@ xmake run test_sphere_n
 | Classes | PascalCase | `Sphere3`, `SphereN` |
 | Functions | snake_case | `pop()`, `reseed()` |
 | Variables | snake_case | `vdc`, `sphere2` |
-| Constants | PascalCase or SCREAMING_SNAKE | `N_POINTS`, `PI` |
+| Constants | PascalCase or SCREAMING_SNAKE | `TABLE_SIZE`, `PI` |
 | Member variables | snake_case with `_` | `vdc_`, `n_` |
 | Files | snake_case | `sphere_n.hpp` |
-| Namespaces | snake_case | `lds2`, `ldsgen` |
+| Namespaces | snake_case | `ldsgen` |
 
 ### Type Usage
 
@@ -134,10 +134,8 @@ class Foo {
 ```
 sphere-n-cpp/
 ├── include/sphere_n/     # Public headers
-│   ├── sphere_n.hpp
 │   └── cylind_n.hpp
 ├── source/              # Implementation
-│   ├── sphere_n.cpp
 │   └── cylind_n.cpp
 ├── test/source/         # Tests
 │   ├── main.cpp
@@ -154,8 +152,8 @@ sphere-n-cpp/
 ## External Dependencies
 
 - **lds-gen-cpp**: Required sibling at `../lds-gen-cpp`
-  - Include: `#include <ldsgen/lds.hpp>`
-  - Provides: `VdCorput`, `Sphere` classes
+  - Include: `#include <ldsgen/lds.hpp>`, `#include <ldsgen/sphere_n.hpp>`
+  - Provides: `VdCorput`, `Sphere`, `Circle`, `Sphere3`, `SphereN`, `SphereGen`
 - **doctest**: Testing (via CPM)
 - **fmt**: Formatting (via CPM)
 
