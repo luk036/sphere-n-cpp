@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14...3.22)
 
 project(
   Sphere_N
-  VERSION 1.1.3
+  VERSION 1.1.4
   LANGUAGES CXX
 )
 
@@ -92,7 +92,7 @@ CPMAddPackage(
 
 CPMAddPackage(
   NAME LdsGen
-  GIT_TAG v1.2.6
+  GIT_TAG v1.2.7
   GITHUB_REPOSITORY luk036/lds-gen-cpp
   OPTIONS "LDSGEN_BUILD_TESTS OFF" "LDSGEN_BUILD_STANDALONE OFF"
 )
