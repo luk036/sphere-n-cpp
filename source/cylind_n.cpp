@@ -1,8 +1,7 @@
-#include <sphere_n/cylind_n.hpp>
-
 #include <cmath>
 #include <memory>
 #include <mutex>
+#include <sphere_n/cylind_n.hpp>
 #include <stdexcept>
 #include <vector>
 

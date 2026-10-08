@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for Approx, ResultBuilder, TestCase
 
-#include <ldsgen/sphere_n.hpp>      // for sphere3, sphere_n
-#include <sphere_n/cylind_n.hpp>    // for cylind_n
+#include <ldsgen/sphere_n.hpp>    // for sphere3, sphere_n
+#include <sphere_n/cylind_n.hpp>  // for cylind_n
 #include <vector>                 // for vector
 
 TEST_CASE("Sphere3") {

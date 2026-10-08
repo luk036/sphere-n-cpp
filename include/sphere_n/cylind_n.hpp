@@ -4,12 +4,11 @@
  *  @brief Cylindrical-coordinate generator (CylindN) for N-dimensional spheres.
  */
 
+#include <ldsgen/lds.hpp>  // for Circle, VdCorput
 #include <memory>
 #include <mutex>
 #include <span>
 #include <vector>
-
-#include <ldsgen/lds.hpp>  // for Circle, VdCorput
 
 namespace ldsgen {
 
