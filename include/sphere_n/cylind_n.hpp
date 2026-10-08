@@ -1,154 +1,66 @@
 #pragma once
 
 /** @file cylind_n.hpp
- *  @brief Cylindrical coordinate method for generating points on N-dimensional spheres.
+ *  @brief Cylindrical-coordinate generator (CylindN) for N-dimensional spheres.
  */
 
-#include <array>    // for array
-#include <cassert>  // for assert
-#include <cstddef>  // for size_t
-#include <memory>   // for unique_ptr, make_unique
-#include <span>     // for span
-// #include <type_traits>  // for move, remove_reference<>::type
-#include <variant>  // for visit, variant
-#include <vector>   // for vector
-// #include <xtensor/xarray.hpp>  // for xtensor, xarray
+#include <ldsgen/lds.hpp>  // for Circle, VdCorput
+#include <memory>
+#include <mutex>
+#include <span>
+#include <vector>
 
-#include <ldsgen/lds.hpp>  // for VdCorput, Sphere
-
-namespace lds2 {
-    // using Arr = xt::xarray<double, xt::layout_type::row_major>;
-    using ldsgen::Circle;
-    using ldsgen::VdCorput;
-    using std::array;
-    using std::span;
-    using std::vector;
-
-    class CylindN;
+namespace ldsgen {
 
     /**
-     * @brief Variant type for cylindrical generator dispatching
+     * @brief Base class for cylindrical-coordinate generators
      *
-     * A std::variant that holds either a Circle (2D base case) or a CylindN
-     * (recursive case). Used for runtime polymorphism in the recursive
-     * cylindrical coordinate generation algorithm.
+     * Provides the common interface for all cylindrical sequence generators.
+     * Mirrors ldsgen::SphereGen so cylind_n stays independent of sphere_n.hpp.
      */
-    /**
-     * @brief Variant type for recursive cylindrical generator dispatching.
-     *
-     * Holds either a Circle (2D base case) or a CylindN (recursive N-dimensional case)
-     * for the cylindrical coordinate generation algorithm.
-     */
-    using CylindVariant = std::variant<std::unique_ptr<Circle>, std::unique_ptr<CylindN>>;
-
-     /**
-      * Generate using cylindrical coordinate method
-      *
-      * @dot
-      *   digraph cylind_flow {
-      *     rankdir=LR;
-      *     bgcolor="transparent";
-      *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
-      *     vdc [label="VdCorput b_0", fillcolor="#a9cce3"];
-      *     cgen [label="Cylind Gen\n(recursive)", fillcolor="#d4e6f1"];
-      *     combine [label="Cylindrical:\nsqrt(1-z^2)*P_{n-1}", fillcolor="#f9e79f"];
-      *     result [label="Point\n(x1,...,xn,z)", fillcolor="#7fb3d8"];
-      *     vdc -> combine [label="z"];
-      *     cgen -> combine [label="P_{n-1}"];
-      *     combine -> result;
-      *   }
-      * @enddot
-      *
-      * @verbatim
-      *     z
-      *     ^
-      *     |
-      *     |    . P(r,phi,z)
-      *     |  .
-      *     |.
-      *     +---------> y
-      *    /|
-      *   / |
-      *  /  |
-      * x   |
-      *     |
-      *     v rho
-      * @endverbatim
-      */
-    class CylindN {
-      private:
-        VdCorput vdc;
-        CylindVariant c_gen;
-
+    class CylindGen {
       public:
-        /**
-         * @brief Construct a new CylindN object
-         *
-         * The `CylindN(span<const size_t> base)` is a constructor for
-         * the `CylindN` class. It takes one parameter `base`, which is
-         * used as the bases for generating the cylindrical sequence. The `explicit`
-         * keyword indicates that this constructor can only be used for explicit
-         * construction and not for implicit conversions.
-         *
-         * @param[in] base Span containing base numbers for sequence generation
-         *
-         * @verbatim
-         *   Base: [b0, b1, b2, ..., bn]
-         *         |   |   |        |
-         *         v   v   v        v
-         *   VdCorput CylindGen (recursive)
-         *      |      |
-         *      +------+
-         *       cylindrical point
-         * @endverbatim
-         */
-        explicit CylindN(span<const unsigned long> base) : vdc{base[0]} {
-            const auto n = base.size();
-            assert(n >= 2);
-            if (n == 2) {
-                this->c_gen = std::make_unique<Circle>(base[1]);
-            } else {
-                this->c_gen = std::make_unique<CylindN>(base.last(n - 1));
-            }
-        }
-
-        /**
-         * @brief Generate the next point using cylindrical coordinate method
-         *
-         * Generates a uniformly distributed point using cylindrical coordinates.
-         * This method uses the Van der Corput sequence to generate the z-coordinate
-         * and recursively generates the base dimensions, then combines them using
-         * cylindrical coordinate transformation.
-         *
-         * @f[
-         *     P = (\sqrt{1-z^2}\;P_{n-1},\; z), \quad z \in [-1, 1],\; P_{n-1} \in S^{n-2}
-         * @f]
-         *
-         * @return vector<double> An (n+1)-dimensional point [x1, x2, ..., xn, z]
-         *
-         * @verbatim
-         *   Sequence: v0, v1, v2, ...
-         *              |
-         *              v
-         *   VdCorput -> CylindN -> [x1, x2, ..., xn, z]
-         *      |      |
-         *      v      v
-         *   cos(phi)  sin(phi)
-         * @endverbatim
-         */
-        auto pop() -> vector<double>;
-
-        /**
-         * @brief reseed
-         *
-         * The `reseed(size_t seed)` function is used to reset the state of the
-         * sequence generator to a specific seed value. This allows the sequence
-         * generator to start generating the sequence from the beginning, or from a
-         * specific point in the sequence, depending on the value of the seed.
-         *
-         * @param[in] seed The seed value to reset to
-         */
-        auto reseed(unsigned long seed) -> void;
+        CylindGen() = default;
+        CylindGen(const CylindGen&) = default;
+        CylindGen(CylindGen&&) noexcept = default;
+        CylindGen& operator=(const CylindGen&) = default;
+        CylindGen& operator=(CylindGen&&) noexcept = default;
+        virtual ~CylindGen() = default;
+        virtual std::vector<double> pop() = 0;
+        virtual void reseed(unsigned long seed) = 0;
     };
 
-}  // namespace lds2
+    /**
+     * @brief Wrapper class to make Circle compatible with the CylindGen interface.
+     */
+    class CircleWrapper : public CylindGen {
+      public:
+        explicit CircleWrapper(unsigned long base);
+        std::vector<double> pop() override;
+        void reseed(unsigned long seed) override;
+
+      private:
+        Circle circle_;
+        mutable std::mutex mutex_;
+    };
+
+    /**
+     * @brief N-dimensional sphere sequence generator using cylindrical coordinates.
+     *
+     * Recursively builds a point on S^(n-1) as P = (sqrt(1 - z^2) * P_{n-1}, z), where
+     * z = 2*VdC - 1 is in [-1, 1] and P_{n-1} comes from the lower-dimensional generator,
+     * with a Circle generator as the 2D base case. Thread-safe (internal mutex).
+     */
+    class CylindN : public CylindGen {
+      public:
+        explicit CylindN(std::span<const unsigned long> base);
+        std::vector<double> pop() override;
+        void reseed(unsigned long seed) override;
+
+      private:
+        VdCorput vdc_;
+        std::unique_ptr<CylindGen> c_gen_;
+        unsigned int n_;
+        mutable std::mutex mutex_;
+    };
+}  // namespace ldsgen

@@ -20,7 +20,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /utf-8 /W4 /WX", {force = true})
+    add_cxflags("/EHsc /utf-8 /W4 /WX /wd4702", {force = true})
 end
 
 target("SphereN")
@@ -28,6 +28,9 @@ target("SphereN")
     add_includedirs("include", {public = true})
     add_includedirs("../lds-gen-cpp/include", {public = true})
     add_files("source/*.cpp")
+    -- sphere_n lives in the sibling lds-gen-cpp repo; compile its source here to
+    -- provide the ldsgen::Sphere3/SphereN definitions without a local copy
+    add_files("../lds-gen-cpp/source/sphere_n.cpp")
     add_packages("doctest")
 
 target("test_sphere_n")
