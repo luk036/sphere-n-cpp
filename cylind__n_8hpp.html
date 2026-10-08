@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Sphere_N<span id="projectnumber">&#160;1.1.3;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Sphere_N<span id="projectnumber">&#160;1.1.4</span>
    </div>
   </td>
  </tr>
@@ -82,44 +82,34 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">cylind_n.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Cylindrical coordinate method for generating points on N-dimensional spheres.  
+<p>Cylindrical-coordinate generator (CylindN) for N-dimensional spheres.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;array&gt;</code><br />
-<code>#include &lt;cassert&gt;</code><br />
-<code>#include &lt;cstddef&gt;</code><br />
+<div class="textblock"><code>#include &lt;ldsgen/lds.hpp&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;span&gt;</code><br />
-<code>#include &lt;variant&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;ldsgen/lds.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for cylind_n.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="cylind__n_8hpp__incl.png" border="0" usemap="#asphere__n_2cylind__n_8hpp" alt=""/></div>
 <map name="asphere__n_2cylind__n_8hpp" id="asphere__n_2cylind__n_8hpp">
-<area shape="rect" title="Cylindrical coordinate method for generating points on N&#45;dimensional spheres." alt="" coords="274,5,441,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,61,104"/>
-<area shape="poly" title=" " alt="" coords="297,33,76,81,75,76,296,28"/>
-<area shape="rect" title=" " alt="" coords="85,79,155,104"/>
-<area shape="poly" title=" " alt="" coords="320,33,169,78,167,73,318,28"/>
-<area shape="rect" title=" " alt="" coords="179,79,250,104"/>
-<area shape="poly" title=" " alt="" coords="336,33,251,75,249,70,333,28"/>
-<area shape="rect" title=" " alt="" coords="275,79,352,104"/>
-<area shape="poly" title=" " alt="" coords="352,32,330,68,325,66,348,30"/>
-<area shape="rect" title=" " alt="" coords="376,79,429,104"/>
-<area shape="poly" title=" " alt="" coords="367,30,390,66,386,69,363,32"/>
-<area shape="rect" title=" " alt="" coords="454,79,522,104"/>
-<area shape="poly" title=" " alt="" coords="380,28,456,70,454,74,377,33"/>
-<area shape="rect" title=" " alt="" coords="546,79,609,104"/>
-<area shape="poly" title=" " alt="" coords="393,28,534,73,532,78,392,33"/>
-<area shape="rect" title=" " alt="" coords="633,79,749,104"/>
-<area shape="poly" title=" " alt="" coords="411,28,624,73,623,78,410,33"/>
+<area shape="rect" title="Cylindrical&#45;coordinate generator (CylindN) for N&#45;dimensional spheres." alt="" coords="196,5,363,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,121,104"/>
+<area shape="poly" title=" " alt="" coords="245,33,112,77,110,72,244,28"/>
+<area shape="rect" title=" " alt="" coords="146,79,223,104"/>
+<area shape="poly" title=" " alt="" coords="266,33,213,72,210,68,263,29"/>
+<area shape="rect" title=" " alt="" coords="247,79,311,104"/>
+<area shape="poly" title=" " alt="" coords="282,31,282,65,277,65,277,31"/>
+<area shape="rect" title=" " alt="" coords="335,79,389,104"/>
+<area shape="poly" title=" " alt="" coords="294,29,340,67,336,72,291,33"/>
+<area shape="rect" title=" " alt="" coords="413,79,476,104"/>
+<area shape="poly" title=" " alt="" coords="307,28,406,71,404,76,305,33"/>
 </map>
 </div>
 </div>
@@ -127,22 +117,23 @@ Include dependency graph for cylind_n.hpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds2_1_1CylindN.html">lds2::CylindN</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classldsgen_1_1CylindGen.html">ldsgen::CylindGen</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for cylindrical-coordinate generators.  <a href="classldsgen_1_1CylindGen.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classldsgen_1_1CircleWrapper.html">ldsgen::CircleWrapper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper class to make Circle compatible with the <a class="el" href="classldsgen_1_1CylindGen.html" title="Base class for cylindrical-coordinate generators.">CylindGen</a> interface.  <a href="classldsgen_1_1CircleWrapper.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classldsgen_1_1CylindN.html">ldsgen::CylindN</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">N-dimensional sphere sequence generator using cylindrical coordinates.  <a href="classldsgen_1_1CylindN.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespacelds2" id="r_namespacelds2"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds2.html">lds2</a></td></tr>
+<tr class="memitem:namespaceldsgen" id="r_namespaceldsgen"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceldsgen.html">ldsgen</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a607e3f4095769200dc43f3701d8d278a" id="r_a607e3f4095769200dc43f3701d8d278a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds2.html#a607e3f4095769200dc43f3701d8d278a">lds2::CylindVariant</a> = std::variant&lt; std::unique_ptr&lt; Circle &gt;, std::unique_ptr&lt; <a class="el" href="classlds2_1_1CylindN.html">CylindN</a> &gt; &gt;</td></tr>
-<tr class="memdesc:a607e3f4095769200dc43f3701d8d278a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant type for cylindrical generator dispatching.  <br /></td></tr>
-<tr class="separator:a607e3f4095769200dc43f3701d8d278a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Cylindrical coordinate method for generating points on N-dimensional spheres. </p>
+<div class="textblock"><p>Cylindrical-coordinate generator (CylindN) for N-dimensional spheres. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

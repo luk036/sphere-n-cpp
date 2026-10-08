@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pop_0',['pop',['../classlds2_1_1CylindN.html#a74b13a6c44aceac3a45d64d187fd7a65',1,'lds2::CylindN::pop()'],['../classlds2_1_1Sphere3.html#a5e5a5a78d5a032252b32b6c028658b86',1,'lds2::Sphere3::pop()'],['../classlds2_1_1SphereN.html#ae12486a0b04331c42266a22907c84bc7',1,'lds2::SphereN::pop()']]]
+  ['operator_3d_0',['operator=',['../classldsgen_1_1CylindGen.html#a5bf870ac5b9b4a27de19682b4519bd25',1,'ldsgen::CylindGen::operator=(const CylindGen &amp;)=default'],['../classldsgen_1_1CylindGen.html#ad1ed077002d42e1b965bf3e4953cc4c8',1,'ldsgen::CylindGen::operator=(CylindGen &amp;&amp;) noexcept=default']]]
 ];

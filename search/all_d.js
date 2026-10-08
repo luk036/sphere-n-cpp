@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⚽_20sphere_20n_20cpp_0',['⚽ sphere-n-cpp',['../index.html#autotoc_md0',1,'']]]
+  ['your_20needs_0',['Adjust the template to your needs',['../index.html#autotoc_md3',1,'']]]
 ];
