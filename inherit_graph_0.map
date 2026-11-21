@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classldsgen_1_1CylindGen.html" title="Base class for cylindrical&#45;coordinate generators." alt="" coords="5,31,145,56"/>
-<area shape="rect" id="Node000001" href="$classldsgen_1_1CircleWrapper.html" title="Wrapper class to make Circle compatible with the CylindGen interface." alt="" coords="193,5,359,31"/>
-<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="159,30,193,26,193,31,159,35"/>
-<area shape="rect" id="Node000002" href="$classldsgen_1_1CylindN.html" title="N&#45;dimensional sphere sequence generator using cylindrical coordinates." alt="" coords="214,55,338,80"/>
-<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="159,51,214,57,213,63,159,56"/>
+<area shape="rect" id="Node000000" href="$classldsgen_1_1CylindGen.html" title="Base class for cylindrical&#45;coordinate generators." alt="" coords="5,32,145,60"/>
+<area shape="rect" id="Node000001" href="$classldsgen_1_1CircleWrapper.html" title="Wrapper class to make Circle compatible with the CylindGen interface." alt="" coords="193,5,357,33"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="160,32,195,30,189,31,161,37"/>
+<area shape="rect" id="Node000002" href="$classldsgen_1_1CylindN.html" title="N&#45;dimensional sphere sequence generator using cylindrical coordinates." alt="" coords="213,57,336,85"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="161,54,215,63,210,64,160,59"/>
 </map>

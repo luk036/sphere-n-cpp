@@ -5,7 +5,7 @@ var indexSectionsWithContent =
   2: "l",
   3: "acr",
   4: "copr~",
-  5: "as"
+  5: "abcdfnprstuy⚽✨"
 };
 
 var indexSectionNames =
